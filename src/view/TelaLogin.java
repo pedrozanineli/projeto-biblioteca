@@ -110,8 +110,14 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_campoSenhaActionPerformed
 
     private void botaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEntrarActionPerformed
-        if (campoUsuario.getText().equals("Alunos")){
-               System.out.println("Oi");
+        if (campoUsuario.getText().equals("Admin")){
+            TelaAdmin novaTela = new TelaAdmin();
+            novaTela.setVisible(true);
+            TelaLogin.super.dispose();
+        }else if(campoUsuario.getText().equals("Alunos")){
+            TelaPrincipal novaTela = new TelaPrincipal();
+            novaTela.setVisible(true);
+            TelaLogin.super.dispose();
         }
     }//GEN-LAST:event_botaoEntrarActionPerformed
 
