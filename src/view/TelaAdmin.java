@@ -16,6 +16,8 @@ public class TelaAdmin extends javax.swing.JFrame {
      */
     public TelaAdmin() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        setExtendedState(MAXIMIZED_BOTH);
     }
 
     /**
