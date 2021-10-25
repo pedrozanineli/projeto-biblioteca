@@ -133,17 +133,6 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_campoSenhaActionPerformed
 
     private void botaoEntrarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botaoEntrarKeyPressed
-//      if (evt.getKeyCode() == VK_ENTER){
-//          if (campoUsuario.getText().equals("Admin")){
-//            TelaAdmin novaTela = new TelaAdmin();
-//            novaTela.setVisible(true);
-//            TelaLogin.super.dispose();
-//        }else if(campoUsuario.getText().equals("Alunos")){
-//            TelaPrincipal novaTela = new TelaPrincipal();
-//            novaTela.setVisible(true);
-//            TelaLogin.super.dispose();
-//        }
-//      }
         System.out.println("Enter");
     }//GEN-LAST:event_botaoEntrarKeyPressed
 
