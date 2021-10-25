@@ -69,7 +69,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Tahoma", 0, 19)); // NOI18N
-        jTextArea1.setRows(5);
+        jTextArea1.setForeground(new java.awt.Color(102, 102, 102));
+        jTextArea1.setRows(2);
         jTextArea1.setText("Para utilizar as salas da biblioteca, escolha a partir dos horários disponíveis uma sala que não \ntenha sido reservada ainda.");
         jScrollPane1.setViewportView(jTextArea1);
 
