@@ -97,7 +97,7 @@ public class TelaAdmin extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addContainerGap())
         );
@@ -127,13 +127,21 @@ public class TelaAdmin extends javax.swing.JFrame {
         );
 
         botaoVoltar.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
+        botaoVoltar.setForeground(new java.awt.Color(102, 102, 102));
         botaoVoltar.setText("️Voltar");
         botaoVoltar.setPreferredSize(new java.awt.Dimension(75, 30));
+        botaoVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoVoltarActionPerformed(evt);
+            }
+        });
 
         botaoCancelar.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
+        botaoCancelar.setForeground(new java.awt.Color(102, 102, 102));
         botaoCancelar.setText("Cancelar Reserva");
 
         botaoReservar.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
+        botaoReservar.setForeground(new java.awt.Color(102, 102, 102));
         botaoReservar.setText("Reservar Sala");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -159,7 +167,7 @@ public class TelaAdmin extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(botaoVoltar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -174,6 +182,12 @@ public class TelaAdmin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
+        TelaLogin tl = new TelaLogin();
+        tl.setVisible(true);
+        TelaAdmin.super.dispose();
+    }//GEN-LAST:event_botaoVoltarActionPerformed
 
 
 
