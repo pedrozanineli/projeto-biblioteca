@@ -85,7 +85,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(40, 91, 139));
 
-        jLabel3.setFont(new java.awt.Font("Roboto Condensed", 0, 70)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Roboto Condensed", 1, 70)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("FACAMP");
 
