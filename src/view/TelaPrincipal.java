@@ -5,6 +5,7 @@
  */
 package view;
 
+import Utility.CellRenderer;
 import java.awt.Font;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -23,6 +24,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
         configurarTabela();
+        listaHorarios.setCellRenderer(new CellRenderer(14));
 
     }
 
@@ -125,7 +127,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
+                .addContainerGap(17, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addContainerGap())
         );
@@ -200,8 +202,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
         jLabel4.setText("Horário");
 
-        listaHorarios.setBackground(new java.awt.Color(189, 189, 189));
-        listaHorarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        listaHorarios.setBackground(new java.awt.Color(220, 220, 220));
+        listaHorarios.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
         listaHorarios.setForeground(new java.awt.Color(102, 102, 102));
         listaHorarios.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00\t", "17:00\t", "18:00\t", "19:00" };
