@@ -6,6 +6,7 @@
 package view;
 
 import java.awt.Font;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -258,15 +259,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             new String [] {
                 "Nome", "RA", "Email"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        ));
         tabelaNomes.setRowHeight(30);
         jScrollPane2.setViewportView(tabelaNomes);
 
@@ -281,7 +274,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         addAluno.setForeground(new java.awt.Color(102, 102, 102));
         addAluno.setText("Adicionar Aluno");
-        addAluno.setEnabled(false);
         addAluno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addAlunoActionPerformed(evt);
@@ -513,24 +505,32 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
    
     private void addAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAlunoActionPerformed
-    DefaultTableModel modelo = ((DefaultTableModel) tabelaNomes.getModel());
-   
-    modelo.setRowCount(modelo.getRowCount() + 1);
+        try{
+            
+            if(nomeAluno.getText().equals("") || raAluno.getText().equals("") || emailAluno.getText().equals("")){
+                throw new Exception("Preencha os campos para adicionar o aluno");
+             }
+      
+            DefaultTableModel modelo = ((DefaultTableModel) tabelaNomes.getModel());
+            modelo.addRow(new Object[]{nomeAluno.getText(), raAluno.getText(),emailAluno.getText()});
     
-    addAluno.setEnabled(false);
-    emailAluno.setText("");
-    raAluno.setText("");
-    nomeAluno.setText("");
+
     
-   if (modelo.getRowCount() >= 6){
+            emailAluno.setText("");
+            raAluno.setText("");
+            nomeAluno.setText("");
+    
+            if (modelo.getRowCount() >= 6){
        
-       addAluno.setEnabled(false);
-   }
-   if (modelo.getRowCount() >= 1){
+                addAluno.setEnabled(false);
+            }
+            if (modelo.getRowCount() >= 1){
        
-       rmvAluno.setEnabled(true);
-   }    
-   
+                rmvAluno.setEnabled(true);
+            }    
+        }catch(Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_addAlunoActionPerformed
 
     private void rmvAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rmvAlunoActionPerformed
@@ -550,26 +550,17 @@ DefaultTableModel modelo = ((DefaultTableModel) tabelaNomes.getModel());
     }//GEN-LAST:event_rmvAlunoActionPerformed
 
     private void emailAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailAlunoActionPerformed
-         if(!nomeAluno.getText().equals("") && !raAluno.getText().equals("") && !emailAluno.getText().equals("")){
-            addAluno.setEnabled(true);
-        }
-        
+
        
     }//GEN-LAST:event_emailAlunoActionPerformed
 
     private void nomeAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeAlunoActionPerformed
-        if(!nomeAluno.getText().equals("")&& !raAluno.getText().equals("") && !emailAluno.getText().equals("")){
-            addAluno.setEnabled(true);
-        }
+
         
     }//GEN-LAST:event_nomeAlunoActionPerformed
 
     private void raAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_raAlunoActionPerformed
-         if(!nomeAluno.getText().equals("")&& !raAluno.getText().equals("") && !emailAluno.getText().equals("")){
-            addAluno.setEnabled(true);
-        }
-        
-        
+
     }//GEN-LAST:event_raAlunoActionPerformed
 
     /**
