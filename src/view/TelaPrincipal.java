@@ -23,18 +23,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
         configurarTabela();
-        
+
     }
-    
-                
-    
-     public void configurarTabela(){
-        tabelaNomes.getTableHeader().setFont(new Font("Roboto Condensed", Font.PLAIN,14));
+
+    public void configurarTabela() {
+        tabelaNomes.getTableHeader().setFont(new Font("Roboto Condensed", Font.PLAIN, 14));
         tabelaNomes.setRowHeight(30);
         tabelaNomes.getColumnModel().getColumn(0).setPreferredWidth(210);
         tabelaNomes.getColumnModel().getColumn(1).setPreferredWidth(148);
         tabelaNomes.getColumnModel().getColumn(2).setPreferredWidth(210);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,7 +57,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel8 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        listaHorarios = new javax.swing.JList<>();
         jLabel5 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -201,20 +200,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
         jLabel4.setText("Horário");
 
-        jList1.setBackground(new java.awt.Color(189, 189, 189));
-        jList1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jList1.setForeground(new java.awt.Color(102, 102, 102));
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        listaHorarios.setBackground(new java.awt.Color(189, 189, 189));
+        listaHorarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        listaHorarios.setForeground(new java.awt.Color(102, 102, 102));
+        listaHorarios.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00\t", "17:00\t", "18:00\t", "19:00" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jList1.setFixedCellHeight(50);
-        jList1.setFixedCellWidth(215);
-        jList1.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
-        jList1.setSelectionBackground(new java.awt.Color(40, 91, 139));
-        jScrollPane1.setViewportView(jList1);
+        listaHorarios.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        listaHorarios.setFixedCellHeight(50);
+        listaHorarios.setFixedCellWidth(215);
+        listaHorarios.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
+        listaHorarios.setSelectionBackground(new java.awt.Color(40, 91, 139));
+        jScrollPane1.setViewportView(listaHorarios);
 
         jLabel5.setFont(new java.awt.Font("Roboto Condensed", 0, 20)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(102, 102, 102));
@@ -438,19 +437,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(8, 8, 8))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1060, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnVoltar1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1060, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnVoltar1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(8, 8, 8)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -479,7 +479,25 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        try {
+            if ((!botaoDataAmanha.isSelected() && !botaoDataHoje.isSelected()) || 
+                (!botaoLousaNao.isSelected() && !botaoLousaSim.isSelected()) || 
+                 tabelaNomes.getModel().getRowCount() == 0 ||
+                 listaHorarios.getSelectedIndex() == -1) {
+
+                throw new Exception("Preencha todos os dados");
+
+            }
+            else{
+                ReservaSala rs = new ReservaSala(this);
+                this.setVisible(false);
+                rs.setVisible(true);
+                
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void botaoDataHojeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDataHojeActionPerformed
@@ -488,7 +506,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void botaoDataAmanhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDataAmanhaActionPerformed
         botaoDataHoje.setSelected(false);
-        
+
     }//GEN-LAST:event_botaoDataAmanhaActionPerformed
 
     private void botaoLousaSimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLousaSimActionPerformed
@@ -496,67 +514,65 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoLousaSimActionPerformed
 
     private void botaoLousaNaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLousaNaoActionPerformed
-      botaoLousaSim.setSelected(false);
+        botaoLousaSim.setSelected(false);
     }//GEN-LAST:event_botaoLousaNaoActionPerformed
 
     private void btnVoltar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltar1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnVoltar1ActionPerformed
 
-   
-    private void addAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAlunoActionPerformed
-        try{
-            
-            if(nomeAluno.getText().equals("") || raAluno.getText().equals("") || emailAluno.getText().equals("")){
-                throw new Exception("Preencha os campos para adicionar o aluno");
-             }
-      
-            DefaultTableModel modelo = ((DefaultTableModel) tabelaNomes.getModel());
-            modelo.addRow(new Object[]{nomeAluno.getText(), raAluno.getText(),emailAluno.getText()});
-    
 
-    
+    private void addAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAlunoActionPerformed
+        try {
+
+            if (nomeAluno.getText().equals("") || raAluno.getText().equals("") || emailAluno.getText().equals("")) {
+                throw new Exception("Preencha os campos para adicionar o aluno");
+            }
+
+            DefaultTableModel modelo = ((DefaultTableModel) tabelaNomes.getModel());
+            modelo.addRow(new Object[]{nomeAluno.getText(), raAluno.getText(), emailAluno.getText()});
+
             emailAluno.setText("");
             raAluno.setText("");
             nomeAluno.setText("");
-    
-            if (modelo.getRowCount() >= 6){
-       
+
+            if (modelo.getRowCount() >= 6) {
+
                 addAluno.setEnabled(false);
             }
-            if (modelo.getRowCount() >= 1){
-       
+            if (modelo.getRowCount() >= 1) {
+
                 rmvAluno.setEnabled(true);
-            }    
-        }catch(Exception e) {
+            }
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_addAlunoActionPerformed
 
     private void rmvAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rmvAlunoActionPerformed
-DefaultTableModel modelo = ((DefaultTableModel) tabelaNomes.getModel());
-   
-   modelo.setRowCount(modelo.getRowCount() - 1);
-   
-   if (modelo.getRowCount() < 6){
-       
-       addAluno.setEnabled(true);
-   }        
-   
-   if (modelo.getRowCount() < 2){
-       
-       rmvAluno.setEnabled(false);
-   }       
+        DefaultTableModel modelo = ((DefaultTableModel) tabelaNomes.getModel());
+
+        modelo.setRowCount(modelo.getRowCount() - 1);
+
+        if (modelo.getRowCount() < 6) {
+
+            addAluno.setEnabled(true);
+        }
+
+        if (modelo.getRowCount() < 2) {
+
+            rmvAluno.setEnabled(false);
+        }
     }//GEN-LAST:event_rmvAlunoActionPerformed
 
     private void emailAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailAlunoActionPerformed
 
-       
+
     }//GEN-LAST:event_emailAlunoActionPerformed
 
     private void nomeAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeAlunoActionPerformed
 
-        
+
     }//GEN-LAST:event_nomeAlunoActionPerformed
 
     private void raAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_raAlunoActionPerformed
@@ -566,7 +582,6 @@ DefaultTableModel modelo = ((DefaultTableModel) tabelaNomes.getModel());
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addAluno;
@@ -588,7 +603,6 @@ DefaultTableModel modelo = ((DefaultTableModel) tabelaNomes.getModel());
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
@@ -597,6 +611,7 @@ DefaultTableModel modelo = ((DefaultTableModel) tabelaNomes.getModel());
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JList<String> listaHorarios;
     private javax.swing.JTextField nomeAluno;
     private javax.swing.JTextField raAluno;
     private javax.swing.JButton rmvAluno;
