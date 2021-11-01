@@ -1,8 +1,6 @@
-
-package view;
+package View;
 
 import Utility.CellRenderer;
-
 
 public class ReservaSala extends javax.swing.JFrame {
     
@@ -13,8 +11,6 @@ public class ReservaSala extends javax.swing.JFrame {
         listaSalas.setCellRenderer(new CellRenderer(18));
         setExtendedState(MAXIMIZED_BOTH);
     }
-    
-    
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -144,9 +140,6 @@ public class ReservaSala extends javax.swing.JFrame {
         this.setVisible(false);
         tp.setVisible(true);
     }//GEN-LAST:event_btnVoltar1ActionPerformed
-
-    
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnVoltar1;
