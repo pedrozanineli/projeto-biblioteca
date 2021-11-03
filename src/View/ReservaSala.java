@@ -1,15 +1,28 @@
 package View;
 
+import BD.controllers.ReservaJpaController;
+import BD.controllers.SalaJpaController;
+import BD.entities.Aluno;
+import BD.entities.Reserva;
+import BD.entities.Sala;
 import Utility.CellRenderer;
+import java.util.List;
+import javax.persistence.Persistence;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 public class ReservaSala extends javax.swing.JFrame {
     
     private TelaPrincipal tp;
+    
     public ReservaSala(TelaPrincipal tp) {
         initComponents();
         this.tp = tp;
-        listaSalas.setCellRenderer(new CellRenderer(18));
+        //listaSalas.setCellRenderer(new CellRenderer(18));
         setExtendedState(MAXIMIZED_BOTH);
+        popularLista();
+        labelTexto.setText("Para " + tp.getTexto() + ", as seguintes salas indicadas abaixo estão disponíveis, selecione para continuar.");
     }
    
     @SuppressWarnings("unchecked")
@@ -20,11 +33,11 @@ public class ReservaSala extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        labelTexto = new javax.swing.JLabel();
         btnVoltar1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         listaSalas = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
+        btnAgendar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,10 +67,10 @@ public class ReservaSala extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setForeground(new java.awt.Color(102, 102, 102));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel1.setText("Para as opções escolhidas (hoje às 08:00 com lousa), as seguintes salas indicadas abaixo estão disponíveis, selecione para continuar.");
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        labelTexto.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        labelTexto.setForeground(new java.awt.Color(102, 102, 102));
+        labelTexto.setText("Default Text");
+        labelTexto.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -65,13 +78,13 @@ public class ReservaSala extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(labelTexto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelTexto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(17, 17, 17))
         );
 
@@ -84,13 +97,8 @@ public class ReservaSala extends javax.swing.JFrame {
             }
         });
 
-        listaSalas.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        listaSalas.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
         listaSalas.setForeground(new java.awt.Color(102, 102, 102));
-        listaSalas.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "SALA 1", "SALA 2", "SALA 3", "SALA 4", "SALA 5", "SALA 6", "SALA 7", "SALA 8", "SALA 9", "SALA 10", "SALA 11", "SALA 12", "SALA 13" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         listaSalas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         listaSalas.setFixedCellHeight(100);
         listaSalas.setFixedCellWidth(315);
@@ -98,9 +106,14 @@ public class ReservaSala extends javax.swing.JFrame {
         listaSalas.setVisibleRowCount(4);
         jScrollPane1.setViewportView(listaSalas);
 
-        jButton1.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(102, 102, 102));
-        jButton1.setText("Agendar");
+        btnAgendar.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
+        btnAgendar.setForeground(new java.awt.Color(102, 102, 102));
+        btnAgendar.setText("Agendar");
+        btnAgendar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgendarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -110,7 +123,7 @@ public class ReservaSala extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAgendar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -129,27 +142,77 @@ public class ReservaSala extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1)
                 .addGap(72, 72, 72)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAgendar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void popularLista() {
+        DefaultListModel<Sala> modelo = new DefaultListModel();
+        listaSalas.setModel(modelo);
+        SalaJpaController sc = new SalaJpaController(Persistence.createEntityManagerFactory("ProjetoBibliotecaPU"));
+        List<Sala> salas = sc.findSalaEntities();
+        for (Sala sala : salas) {
+            modelo.addElement(sala);
+        }
+    }
+    
+    //Gerar codigo de reserva
+    public String gerarCod (){
+        if (Integer.parseInt(listaSalas.getSelectedValue().toString())<10){
+            return "0" + listaSalas.getSelectedValue().toString() + tp.getDate().format(tp.formatCod);
+        }else{
+            return listaSalas.getSelectedValue().toString() + tp.getDate().format(tp.formatCod);
+        }
+        
+    }
+
+    public JList<Sala> getListaSalas() {
+        return listaSalas;
+    }
+
+    public void setListaSalas(JList<Sala> listaSalas) {
+        this.listaSalas = listaSalas;
+    }
+    
+    
+    
     private void btnVoltar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltar1ActionPerformed
         this.setVisible(false);
         tp.setVisible(true);
     }//GEN-LAST:event_btnVoltar1ActionPerformed
 
+    private void btnAgendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgendarActionPerformed
+         try {
+            for (int i = 0; i < tp.getTabelaNomes().getRowCount(); i++) {
+                String ra = tp.getTabelaNomes().getValueAt(i, 1).toString();
+                Aluno a = new Aluno();
+                a.setRa(ra);
+                ReservaJpaController rc = new ReservaJpaController(Persistence.createEntityManagerFactory("ProjetoBibliotecaPU"));
+                Reserva reserva = new Reserva(gerarCod(),tp.getData(), tp.getHorario(), a, listaSalas.getSelectedValue());
+                rc.create(reserva);
+            }
+            
+            SucessoReserva sr = new SucessoReserva(tp);
+            sr.setVisible(true);
+            this.dispose();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAgendarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgendar;
     private javax.swing.JButton btnVoltar1;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JList<String> listaSalas;
+    private javax.swing.JLabel labelTexto;
+    private javax.swing.JList<Sala> listaSalas;
     // End of variables declaration//GEN-END:variables
 }

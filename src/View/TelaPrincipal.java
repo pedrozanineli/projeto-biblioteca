@@ -1,7 +1,14 @@
 package View;
 
+import BD.controllers.AlunoJpaController;
+import BD.entities.Aluno;
 import Utility.CellRenderer;
 import java.awt.Font;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -16,6 +23,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     }
 
+    private String data;
+    private String horario;
+    private String lousa;
+    
+    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM");
+    public DateTimeFormatter formatCod = DateTimeFormatter.ofPattern("MMddhh");
+    private LocalDateTime Hoje = LocalDateTime.now();
+    private LocalDateTime Amanha = LocalDateTime.now().plusDays(1);
+    
+    private String x = String.valueOf(Hoje);
+    private String y = String.valueOf(Amanha);
+    
+    
     public void configurarTabela() {
         tabelaNomes.getTableHeader().setFont(new Font("Roboto Condensed", Font.PLAIN, 14));
         tabelaNomes.setRowHeight(30);
@@ -23,6 +43,73 @@ public class TelaPrincipal extends javax.swing.JFrame {
         tabelaNomes.getColumnModel().getColumn(1).setPreferredWidth(148);
         tabelaNomes.getColumnModel().getColumn(2).setPreferredWidth(210);
     }
+    
+    //Retorna um LocalDateTime
+    public LocalDateTime getDate() {
+        LocalDateTime date;
+        if (botaoDataAmanha.isSelected()) {
+            date = Amanha;
+        } else {
+            date = Hoje;
+        }
+        return date;
+    }
+    
+    //Configura texto para tela de reserva (ReservaSala)
+    public String getTexto() {
+        if (botaoDataAmanha.isSelected()) {
+            setData(dtf.format(Amanha));
+        } else {
+            setData(dtf.format(Hoje));
+        }
+        
+        if (botaoLousaSim.isSelected()) {
+            setLousa("com lousa");
+        } else {
+            setLousa("sem lousa");
+        }
+        horario = listaHorarios.getSelectedValue();
+        return data + " às " + horario + " " + lousa;
+    }
+
+    
+    
+    //Getters e Setters
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public String getLousa() {
+        return lousa;
+    }
+
+    public void setLousa(String lousa) {
+        this.lousa = lousa;
+    }
+
+    public String getHorario() {
+        return horario;
+    }
+
+    public void setHorario(String horario) {
+        this.horario = horario;
+    }
+
+    
+    
+    public JTable getTabelaNomes() {
+        return tabelaNomes;
+    }
+
+    public void setTabelaNomes(JTable tabelaNomes) {
+        this.tabelaNomes = tabelaNomes;
+    }
+    
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -34,7 +121,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         botaoDataHoje = new javax.swing.JToggleButton();
@@ -110,18 +197,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
+                .addContainerGap(17, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addContainerGap())
         );
 
-        jButton3.setBackground(new java.awt.Color(189, 189, 189));
-        jButton3.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(102, 102, 102));
-        jButton3.setText("Buscar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setBackground(new java.awt.Color(189, 189, 189));
+        btnBuscar.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(102, 102, 102));
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
 
@@ -162,7 +249,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(botaoDataHoje, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(botaoDataAmanha, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -390,7 +477,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(botaoLousaSim, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                         .addComponent(botaoLousaNao, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -423,11 +510,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1066, Short.MAX_VALUE)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1066, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnVoltar1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
@@ -458,34 +545,52 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE))
                     .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        try {
-            if ((!botaoDataAmanha.isSelected() && !botaoDataHoje.isSelected()) || 
-                (!botaoLousaNao.isSelected() && !botaoLousaSim.isSelected()) || 
-                 tabelaNomes.getModel().getRowCount() == 0 ||
-                 listaHorarios.getSelectedIndex() == -1) {
-
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+       try {
+            if ((!botaoDataAmanha.isSelected() && !botaoDataHoje.isSelected())
+                    || (!botaoLousaNao.isSelected() && !botaoLousaSim.isSelected())
+                    || tabelaNomes.getModel().getRowCount() == 0
+                    || listaHorarios.getSelectedIndex() == -1) {
+                
                 throw new Exception("Preencha todos os dados");
-
-            }
-            else{
+                
+            } else {
+                AlunoJpaController ac = new AlunoJpaController(Persistence.createEntityManagerFactory("ProjetoBibliotecaPU"));
+                EntityManager em = Persistence.createEntityManagerFactory("ProjetoBibliotecaPU").createEntityManager();
+                boolean existe = false;
+                //Aluno teste = (Aluno) em.createNamedQuery("Aluno.findByRa").getResultList();
+                List<Aluno> teste = em.createNamedQuery("Aluno.findAll").getResultList();
+                
+                for (int i = 0; i < tabelaNomes.getRowCount(); i++) {
+                    
+                    Aluno aluno = new Aluno(tabelaNomes.getValueAt(i, 1).toString(), tabelaNomes.getValueAt(i, 0).toString(), tabelaNomes.getValueAt(i, 2).toString());
+                    
+                    for (Aluno x : teste) {
+                        if ((x.getRa().equals(aluno.getRa()))) {
+                            existe = true;
+                        }                        
+                    }
+                    if (!existe) {
+                        ac.create(aluno);
+                    }
+                    
+                    existe = false;
+                }
                 ReservaSala rs = new ReservaSala(this);
                 this.setVisible(false);
                 rs.setVisible(true);
-                
             }
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void botaoDataHojeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDataHojeActionPerformed
         botaoDataAmanha.setSelected(false);
@@ -571,11 +676,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JToggleButton botaoDataHoje;
     private javax.swing.JToggleButton botaoLousaNao;
     private javax.swing.JToggleButton botaoLousaSim;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnVoltar1;
     private javax.swing.JTextField emailAluno;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
