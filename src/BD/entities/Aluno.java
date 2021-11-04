@@ -110,7 +110,7 @@ public class Aluno implements Serializable {
 
     @Override
     public String toString() {
-        return "BD.entities.Aluno[ ra=" + ra + " ]";
+        return ra;
     }
     
 }

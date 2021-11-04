@@ -28,7 +28,7 @@ public class TelaLogin extends javax.swing.JFrame {
         campoSenha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Login");
+        setTitle("FACAMP");
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N

@@ -5,7 +5,13 @@
  */
 package View;
 
+import BD.entities.Reserva;
 import java.awt.Font;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,12 +25,27 @@ public class TelaAdmin extends javax.swing.JFrame {
     public TelaAdmin() {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
+        setIconImage(new ImageIcon(getClass().getResource("/Images/Facamp_FavIcon.png")).getImage());
         configurarTabela();
+        popularTabela();
     }
-    
-    public void configurarTabela(){
-        tabela.getTableHeader().setFont(new Font("Roboto Condensed", Font.PLAIN,14));
+
+    public void configurarTabela() {
+        tabela.getTableHeader().setFont(new Font("Roboto Condensed", Font.PLAIN, 14));
         tabela.setRowHeight(30);
+    }
+
+    public void popularTabela() {
+        EntityManager em = Persistence.createEntityManagerFactory("ProjetoBibliotecaPU").createEntityManager();
+        List<Reserva> reservas = em.createNamedQuery("Reserva.findAll").getResultList();
+        DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
+        String aux = "";
+        for (Reserva x : reservas) {
+            if (!x.getCodReserva().equals(aux)) {
+                modelo.addRow(new Object[]{x.getCodReserva(), x.getSalanumSala(), x.getData(), x.getHorario(), x.getSalanumSala().getLousa()});
+                aux = x.getCodReserva();
+            }
+        }
     }
 
     /**
@@ -47,6 +68,7 @@ public class TelaAdmin extends javax.swing.JFrame {
         botaoReservar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("FACAMP");
 
         tabela.setFont(new java.awt.Font("Roboto Condensed", 0, 12)); // NOI18N
         tabela.setModel(new javax.swing.table.DefaultTableModel(
@@ -54,14 +76,14 @@ public class TelaAdmin extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Salas Reservadas", "Horário", "Qntd. Alunos", "Lousa?"
+                "Código da Reserva", "Sala Reservada", "Data", "Horário", "Lousa"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                true, true, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -73,10 +95,18 @@ public class TelaAdmin extends javax.swing.JFrame {
             }
         });
         tabela.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tabela.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tabela);
         if (tabela.getColumnModel().getColumnCount() > 0) {
             tabela.getColumnModel().getColumn(0).setResizable(false);
             tabela.getColumnModel().getColumn(1).setResizable(false);
+            tabela.getColumnModel().getColumn(2).setResizable(false);
+            tabela.getColumnModel().getColumn(3).setResizable(false);
+            tabela.getColumnModel().getColumn(4).setResizable(false);
         }
 
         jPanel2.setBackground(new java.awt.Color(40, 91, 139));
@@ -189,6 +219,12 @@ public class TelaAdmin extends javax.swing.JFrame {
         TelaAdmin.super.dispose();
     }//GEN-LAST:event_botaoVoltarActionPerformed
 
+    private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
+        if (evt.getClickCount() == 2) {
+            InfoAlunos ia = new InfoAlunos(this, this.tabela.getValueAt(this.tabela.getSelectedRow(), 0).toString());
+            ia.setVisible(true);
+        }
+    }//GEN-LAST:event_tabelaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

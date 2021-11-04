@@ -4,6 +4,8 @@
  */
 package View;
 
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Samuel
@@ -17,6 +19,7 @@ public class SucessoReserva extends javax.swing.JFrame {
     
     public SucessoReserva(TelaPrincipal tp) {
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/Images/Facamp_FavIcon.png")).getImage());
         setExtendedState(MAXIMIZED_BOTH);
         labelText.setText("A sala foi agendada com sucesso para " + tp.getData() + " às " + tp.getHorario() );
     }
@@ -35,7 +38,7 @@ public class SucessoReserva extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         labelText = new javax.swing.JLabel();
 
@@ -67,6 +70,7 @@ public class SucessoReserva extends javax.swing.JFrame {
         jLabel1.setText("As salas reservadas com os respectivos alunos que a agendaram podem ser conferidas na tabela abaixo:");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("FACAMP");
 
         jPanel3.setBackground(new java.awt.Color(40, 91, 139));
 
@@ -91,9 +95,14 @@ public class SucessoReserva extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jButton1.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(102, 102, 102));
-        jButton1.setText("Voltar");
+        btnVoltar.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
+        btnVoltar.setForeground(new java.awt.Color(102, 102, 102));
+        btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setPreferredSize(new java.awt.Dimension(1222, 90));
@@ -127,7 +136,7 @@ public class SucessoReserva extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnVoltar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 1244, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -138,12 +147,18 @@ public class SucessoReserva extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(478, 478, 478)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+       TelaPrincipal tp = new TelaPrincipal();
+       this.dispose();
+       tp.setVisible(true);
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -151,7 +166,7 @@ public class SucessoReserva extends javax.swing.JFrame {
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

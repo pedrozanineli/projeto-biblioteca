@@ -25,7 +25,8 @@ import javax.persistence.Table;
     @NamedQuery(name = "Reserva.findAll", query = "SELECT r FROM Reserva r"),
     @NamedQuery(name = "Reserva.findByCodReserva", query = "SELECT r FROM Reserva r WHERE r.codReserva = :codReserva"),
     @NamedQuery(name = "Reserva.findByData", query = "SELECT r FROM Reserva r WHERE r.data = :data"),
-    @NamedQuery(name = "Reserva.findByHorario", query = "SELECT r FROM Reserva r WHERE r.horario = :horario")})
+    @NamedQuery(name = "Reserva.findByHorario", query = "SELECT r FROM Reserva r WHERE r.horario = :horario"),
+    @NamedQuery(name = "Reserva.findByRaEmReserva", query = "SELECT r.alunora FROM Reserva r WHERE r.codReserva= :codReserva")})
 public class Reserva implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -131,7 +132,7 @@ public class Reserva implements Serializable {
 
     @Override
     public String toString() {
-        return "BD.entities.Reserva[ codReserva=" + codReserva + " ]";
+        return codReserva;
     }
     
 }

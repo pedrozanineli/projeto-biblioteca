@@ -9,6 +9,7 @@ import Utility.CellRenderer;
 import java.util.List;
 import javax.persistence.Persistence;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
@@ -18,6 +19,7 @@ public class ReservaSala extends javax.swing.JFrame {
     
     public ReservaSala(TelaPrincipal tp) {
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/Images/Facamp_FavIcon.png")).getImage());
         this.tp = tp;
         //listaSalas.setCellRenderer(new CellRenderer(18));
         setExtendedState(MAXIMIZED_BOTH);
@@ -40,6 +42,7 @@ public class ReservaSala extends javax.swing.JFrame {
         btnAgendar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("FACAMP");
 
         jPanel3.setBackground(new java.awt.Color(40, 91, 139));
 
@@ -78,7 +81,7 @@ public class ReservaSala extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addComponent(labelTexto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(labelTexto, javax.swing.GroupLayout.DEFAULT_SIZE, 1059, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,7 +143,7 @@ public class ReservaSala extends javax.swing.JFrame {
                     .addComponent(btnVoltar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
                 .addGap(72, 72, 72)
                 .addComponent(btnAgendar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -153,20 +156,22 @@ public class ReservaSala extends javax.swing.JFrame {
         DefaultListModel<Sala> modelo = new DefaultListModel();
         listaSalas.setModel(modelo);
         SalaJpaController sc = new SalaJpaController(Persistence.createEntityManagerFactory("ProjetoBibliotecaPU"));
-        List<Sala> salas = sc.findSalaEntities();
+        //List<Sala> salas = sc.findSalaEntities();
+        List<Sala> salas = tp.checarSalas();
         for (Sala sala : salas) {
             modelo.addElement(sala);
         }
     }
     
+    public String codGerado;
+    
     //Gerar codigo de reserva
     public String gerarCod (){
         if (Integer.parseInt(listaSalas.getSelectedValue().toString())<10){
-            return "0" + listaSalas.getSelectedValue().toString() + tp.getDate().format(tp.formatCod);
+            return codGerado = "0" + listaSalas.getSelectedValue().toString() + tp.getDate().format(tp.formatCod) + (tp.getHorario()).substring(0,2);
         }else{
-            return listaSalas.getSelectedValue().toString() + tp.getDate().format(tp.formatCod);
+            return codGerado = listaSalas.getSelectedValue().toString() + tp.getDate().format(tp.formatCod) + (tp.getHorario()).substring(0,2);
         }
-        
     }
 
     public JList<Sala> getListaSalas() {

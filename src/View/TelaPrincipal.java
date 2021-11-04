@@ -1,23 +1,29 @@
 package View;
 
 import BD.controllers.AlunoJpaController;
+import BD.controllers.ReservaJpaController;
 import BD.entities.Aluno;
+import BD.entities.Reserva;
+import BD.entities.Sala;
 import Utility.CellRenderer;
 import java.awt.Font;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class TelaPrincipal extends javax.swing.JFrame {
-    
+
     public TelaPrincipal() {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
+        setIconImage(new ImageIcon(getClass().getResource("/Images/Facamp_FavIcon.png")).getImage());
         configurarTabela();
         listaHorarios.setCellRenderer(new CellRenderer(14));
 
@@ -26,16 +32,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private String data;
     private String horario;
     private String lousa;
-    
+
     private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM");
-    public DateTimeFormatter formatCod = DateTimeFormatter.ofPattern("MMddhh");
+    public DateTimeFormatter formatCod = DateTimeFormatter.ofPattern("MMdd");
     private LocalDateTime Hoje = LocalDateTime.now();
     private LocalDateTime Amanha = LocalDateTime.now().plusDays(1);
-    
+
     private String x = String.valueOf(Hoje);
     private String y = String.valueOf(Amanha);
-    
-    
+
     public void configurarTabela() {
         tabelaNomes.getTableHeader().setFont(new Font("Roboto Condensed", Font.PLAIN, 14));
         tabelaNomes.setRowHeight(30);
@@ -43,7 +48,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         tabelaNomes.getColumnModel().getColumn(1).setPreferredWidth(148);
         tabelaNomes.getColumnModel().getColumn(2).setPreferredWidth(210);
     }
-    
+
     //Retorna um LocalDateTime
     public LocalDateTime getDate() {
         LocalDateTime date;
@@ -54,7 +59,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
         return date;
     }
-    
+
     //Configura texto para tela de reserva (ReservaSala)
     public String getTexto() {
         if (botaoDataAmanha.isSelected()) {
@@ -62,7 +67,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         } else {
             setData(dtf.format(Hoje));
         }
-        
+
         if (botaoLousaSim.isSelected()) {
             setLousa("com lousa");
         } else {
@@ -72,8 +77,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         return data + " às " + horario + " " + lousa;
     }
 
-    
-    
     //Getters e Setters
     public String getData() {
         return data;
@@ -99,8 +102,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.horario = horario;
     }
 
-    
-    
     public JTable getTabelaNomes() {
         return tabelaNomes;
     }
@@ -108,9 +109,47 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public void setTabelaNomes(JTable tabelaNomes) {
         this.tabelaNomes = tabelaNomes;
     }
-    
-    
-    
+
+    public String gerarFakeCod(int x) {
+        if (x < 10) {
+            return "0" + x + getDate().format(formatCod).toString() + listaHorarios.getSelectedValue().substring(0,2);
+        } else {
+            return x + getDate().format(formatCod).toString() + listaHorarios.getSelectedValue().substring(0,2);
+        }
+
+    }
+
+    public List<Sala> checarSalas() {
+        EntityManager em = Persistence.createEntityManagerFactory("ProjetoBibliotecaPU").createEntityManager();
+        List<Sala> salasSLousa = em.createNamedQuery("Sala.findByLousa").setParameter("lousa", "Não").getResultList();
+        List<Sala> salaLousa = em.createNamedQuery("Sala.findByLousa").setParameter("lousa", "Sim").getResultList();
+        List<Sala> salas = new ArrayList<Sala>();
+        List<Sala> salasDisponiveis = new ArrayList<Sala>();
+        List<Reserva> reservas = em.createNamedQuery("Reserva.findAll").getResultList();
+        boolean existe = false;
+        if(botaoLousaSim.isSelected()){
+            salas = salaLousa;
+        }else if (botaoLousaNao.isSelected()){
+            salas = salasSLousa;
+        }
+        
+        boolean aux;
+        for (Sala z : salas) {
+            String fakeCod = gerarFakeCod(z.getNumSala());
+            for (Reserva x : reservas) {
+                if ((x.getCodReserva().equals(fakeCod))) {
+                    existe = true;
+                }
+            }
+            if (!existe) {
+                salasDisponiveis.add(z);  
+            }
+            existe = false;
+
+        }
+        return salasDisponiveis;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -153,7 +192,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jButton2.setText("jButton2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
+        setTitle("FACAMP");
 
         jPanel1.setBackground(new java.awt.Color(40, 91, 139));
 
@@ -351,7 +390,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
         jLabel7.setText("Nome:");
 
         nomeAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -361,10 +400,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
         jLabel8.setText("RA:");
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
         jLabel9.setText("E-mail:");
 
         raAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -496,6 +535,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         btnVoltar1.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
         btnVoltar1.setForeground(new java.awt.Color(102, 102, 102));
         btnVoltar1.setText("Voltar");
+        btnVoltar1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVoltar1MouseClicked(evt);
+            }
+        });
         btnVoltar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVoltar1ActionPerformed(evt);
@@ -553,34 +597,34 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-       try {
+        try {
             if ((!botaoDataAmanha.isSelected() && !botaoDataHoje.isSelected())
                     || (!botaoLousaNao.isSelected() && !botaoLousaSim.isSelected())
                     || tabelaNomes.getModel().getRowCount() == 0
                     || listaHorarios.getSelectedIndex() == -1) {
-                
+
                 throw new Exception("Preencha todos os dados");
-                
+
             } else {
                 AlunoJpaController ac = new AlunoJpaController(Persistence.createEntityManagerFactory("ProjetoBibliotecaPU"));
                 EntityManager em = Persistence.createEntityManagerFactory("ProjetoBibliotecaPU").createEntityManager();
                 boolean existe = false;
                 //Aluno teste = (Aluno) em.createNamedQuery("Aluno.findByRa").getResultList();
                 List<Aluno> teste = em.createNamedQuery("Aluno.findAll").getResultList();
-                
+
                 for (int i = 0; i < tabelaNomes.getRowCount(); i++) {
-                    
+
                     Aluno aluno = new Aluno(tabelaNomes.getValueAt(i, 1).toString(), tabelaNomes.getValueAt(i, 0).toString(), tabelaNomes.getValueAt(i, 2).toString());
-                    
+
                     for (Aluno x : teste) {
                         if ((x.getRa().equals(aluno.getRa()))) {
                             existe = true;
-                        }                        
+                        }
                     }
                     if (!existe) {
                         ac.create(aluno);
                     }
-                    
+
                     existe = false;
                 }
                 ReservaSala rs = new ReservaSala(this);
@@ -669,6 +713,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void raAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_raAlunoActionPerformed
 
     }//GEN-LAST:event_raAlunoActionPerformed
+
+    private void btnVoltar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVoltar1MouseClicked
+        if (evt.getClickCount() == 1){
+            
+        }
+    }//GEN-LAST:event_btnVoltar1MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addAluno;
