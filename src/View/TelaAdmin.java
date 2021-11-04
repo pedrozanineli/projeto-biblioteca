@@ -1,11 +1,14 @@
 package View;
 
+import BD.controllers.ReservaJpaController;
+import BD.entities.Aluno;
 import BD.entities.Reserva;
 import java.awt.Font;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class TelaAdmin extends javax.swing.JFrame {
@@ -135,7 +138,7 @@ public class TelaAdmin extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -152,10 +155,20 @@ public class TelaAdmin extends javax.swing.JFrame {
         botaoCancelar.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
         botaoCancelar.setForeground(new java.awt.Color(102, 102, 102));
         botaoCancelar.setText("Cancelar Reserva");
+        botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoCancelarActionPerformed(evt);
+            }
+        });
 
         botaoReservar.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
         botaoReservar.setForeground(new java.awt.Color(102, 102, 102));
         botaoReservar.setText("Reservar Sala");
+        botaoReservar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoReservarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -208,6 +221,28 @@ public class TelaAdmin extends javax.swing.JFrame {
             ia.setVisible(true);
         }
     }//GEN-LAST:event_tabelaMouseClicked
+
+    private void botaoReservarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoReservarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoReservarActionPerformed
+
+    private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
+        try {
+            /*
+            String codRes = this.tabela.getValueAt(this.tabela.getSelectedRow(), 0).toString();
+            EntityManager em = Persistence.createEntityManagerFactory("ProjetoBibliotecaPU").createEntityManager();
+            
+            Reserva r = new Reserva();
+            r.setCodReserva(codRes);
+            
+            em.remove(r);
+            */
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+
+
+    }//GEN-LAST:event_botaoCancelarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCancelar;

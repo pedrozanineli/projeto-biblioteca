@@ -149,7 +149,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
         return salasDisponiveis;
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -654,7 +654,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoLousaNaoActionPerformed
 
     private void btnVoltar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltar1ActionPerformed
-        // TODO add your handling code here:
+        int resposta = JOptionPane.showConfirmDialog(null, "Você deseja mesmo sair?");
+        if (resposta == JOptionPane.YES_OPTION) {
+            TelaLogin tl = new TelaLogin();
+            tl.setVisible(true);
+            TelaPrincipal.super.dispose();
+        }
     }//GEN-LAST:event_btnVoltar1ActionPerformed
 
     private void addAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAlunoActionPerformed
