@@ -182,8 +182,6 @@ public class ReservaSala extends javax.swing.JFrame {
         this.listaSalas = listaSalas;
     }
     
-    
-    
     private void btnVoltar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltar1ActionPerformed
         this.setVisible(false);
         tp.setVisible(true);
