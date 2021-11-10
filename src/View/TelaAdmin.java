@@ -8,6 +8,7 @@ package View;
 import BD.Entities.Reserva;
 import BD.controllers.ReservaJpaController;
 import java.awt.Font;
+import static java.awt.event.KeyEvent.VK_ENTER;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -177,7 +178,7 @@ public class TelaAdmin extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -215,6 +216,11 @@ public class TelaAdmin extends javax.swing.JFrame {
         labelData.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 labelDataMouseClicked(evt);
+            }
+        });
+        labelData.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                labelDataKeyPressed(evt);
             }
         });
 
@@ -265,10 +271,11 @@ public class TelaAdmin extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnVoltar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(btnFiltrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnFiltrar, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -343,6 +350,15 @@ public class TelaAdmin extends javax.swing.JFrame {
             labelData.setText("");
         }
     }//GEN-LAST:event_labelDataMouseClicked
+
+    private void labelDataKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_labelDataKeyPressed
+        if (evt.getKeyCode() == VK_ENTER) {
+            DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
+        for(int i=0; i<tabela.getRowCount();i++){
+            modelo.removeRow(i);
+        }
+        popularTabela(labelData.getText());
+        }    }//GEN-LAST:event_labelDataKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
