@@ -90,6 +90,7 @@ public class InfoAlunos extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        tabela.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tabela);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
