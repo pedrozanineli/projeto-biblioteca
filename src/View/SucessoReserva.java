@@ -74,6 +74,7 @@ public class SucessoReserva extends javax.swing.JFrame {
         jLabel1.setText("As salas reservadas com os respectivos alunos que a agendaram podem ser conferidas na tabela abaixo:");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel3.setBackground(new java.awt.Color(40, 91, 139));
 

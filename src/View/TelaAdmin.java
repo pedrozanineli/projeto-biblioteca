@@ -93,6 +93,7 @@ public class TelaAdmin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("FACAMP");
+        setUndecorated(true);
 
         tabela.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
         tabela.setModel(new javax.swing.table.DefaultTableModel(
@@ -178,7 +179,7 @@ public class TelaAdmin extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

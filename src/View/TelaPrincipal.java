@@ -31,10 +31,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         listaHorarios.setCellRenderer(new CellRenderer(14));
         setIconImage(new ImageIcon(getClass().getResource("/Images/Facamp_FavIcon.png")).getImage());
         setLocationRelativeTo(null);
-        
-        
+
     }
-    
+
     private String user;
     private String data;
     private String horario;
@@ -44,12 +43,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public DateTimeFormatter formatCod = DateTimeFormatter.ofPattern("ddMMyy");
     private LocalDateTime Hoje = LocalDateTime.now();
     private LocalDateTime Amanha = LocalDateTime.now().plusDays(1);
-    
-     private static final String EMAIL_PATTERN =
-            "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+
+    private static final String EMAIL_PATTERN
+            = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
             + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-     
-     private static final Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+
+    private static final Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 
     private String x = String.valueOf(Hoje);
     private String y = String.valueOf(Amanha);
@@ -98,7 +97,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
 
     }
-    
+
     public static boolean isValid(final String email) {
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
@@ -214,6 +213,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("FACAMP");
+        setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(40, 91, 139));
 
@@ -309,7 +309,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(botaoDataHoje, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                         .addComponent(botaoDataAmanha, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(jLabel2)
@@ -365,7 +365,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -583,7 +583,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 26, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -748,15 +748,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoLousaNaoActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
-        if (user.equals("Alunos")) {
-            TelaLogin tl = new TelaLogin();
-            tl.setVisible(true);
-            this.dispose();
-        } else {
-            TelaAdmin ta = new TelaAdmin();
-            ta.setVisible(true);
-            this.dispose();
+        int resposta = JOptionPane.showConfirmDialog(null, "Você deseja mesmo sair?", "Selecione uma opção", JOptionPane.YES_NO_OPTION);
+        if (resposta == JOptionPane.YES_OPTION) {
+            if (user.equals("Alunos")) {
+                TelaLogin tl = new TelaLogin();
+                tl.setVisible(true);
+                this.dispose();
+            } else {
+                TelaAdmin ta = new TelaAdmin();
+                ta.setVisible(true);
+                this.dispose();
+            }
         }
+
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void addAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAlunoActionPerformed
@@ -765,20 +769,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
             if (nomeAluno.getText().equals("") || raAluno.getText().equals("") || emailAluno.getText().equals("")) {
                 throw new Exception("Preencha os campos para adicionar o aluno");
             }
-            
-            if(!isValid(emailAluno.getText())){
-                throw new Exception ("O e-mail inserido não é válido");
-            }    
+
+            if (!isValid(emailAluno.getText())) {
+                throw new Exception("O e-mail inserido não é válido");
+            }
 
             for (int i = 0; i < tabelaNomes.getRowCount(); i++) {
                 if (raAluno.getText().toString().equals(tabelaNomes.getValueAt(i, 1))) {
                     throw new Exception("Aluno já adicionado");
                 }
             }
-            
-            
 
-            
             DefaultTableModel modelo = ((DefaultTableModel) tabelaNomes.getModel());
             modelo.addRow(new Object[]{nomeAluno.getText(), raAluno.getText(), emailAluno.getText()});
 
@@ -808,8 +809,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void rmvAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rmvAlunoActionPerformed
         try {
             DefaultTableModel modelo = ((DefaultTableModel) tabelaNomes.getModel());
-            if(tabelaNomes.getSelectedRow() == -1){
-                throw new Exception ("Selecione um aluno para remover");
+            if (tabelaNomes.getSelectedRow() == -1) {
+                throw new Exception("Selecione um aluno para remover");
             }
             modelo.removeRow(tabelaNomes.getSelectedRow());
 
@@ -843,7 +844,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_nomeAlunoActionPerformed
 
     private void raAlunoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_raAlunoKeyPressed
-       if (evt.getKeyCode() == VK_ENTER) {
+        if (evt.getKeyCode() == VK_ENTER) {
             EntityManager em = Persistence.createEntityManagerFactory("BibliotecaTestePU").createEntityManager();
             try {
                 Aluno a = (Aluno) em.createNamedQuery("Aluno.findByRa").setParameter("ra", raAluno.getText().toString()).getSingleResult();
@@ -858,32 +859,32 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_raAlunoKeyPressed
 
     private void nomeAlunoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nomeAlunoFocusLost
-       try{
-           String nome = nomeAluno.getText();
+        try {
+            String nome = nomeAluno.getText();
 
-        String words[]=nome.split("\s");
-        String capitalizeStr="";
- 
-        for(String word:words){
-            // Capitalize first letter
-            String firstLetter=word.substring(0,1);
-            // Get remaining letter
-            String remainingLetters=word.substring(1);
-            capitalizeStr+=firstLetter.toUpperCase()+remainingLetters+" ";
+            String words[] = nome.split("\s");
+            String capitalizeStr = "";
+
+            for (String word : words) {
+                // Capitalize first letter
+                String firstLetter = word.substring(0, 1);
+                // Get remaining letter
+                String remainingLetters = word.substring(1);
+                capitalizeStr += firstLetter.toUpperCase() + remainingLetters + " ";
+            }
+            nomeAluno.setText(capitalizeStr);
+        } catch (Exception e) {
+
         }
-        nomeAluno.setText(capitalizeStr);
-       }catch(Exception e){
-           
-       }
-        
+
     }//GEN-LAST:event_nomeAlunoFocusLost
 
     private void emailAlunoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailAlunoFocusLost
-        
+
     }//GEN-LAST:event_emailAlunoFocusLost
 
     private void raAlunoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_raAlunoFocusLost
-        
+
     }//GEN-LAST:event_raAlunoFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
