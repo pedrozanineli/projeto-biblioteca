@@ -672,7 +672,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 EntityManager em = Persistence.createEntityManagerFactory("BibliotecaTestePU").createEntityManager();
                 boolean existe = false;
                 List<Aluno> teste = em.createNamedQuery("Aluno.findAll").getResultList();
-                System.out.println(teste);
 
                 //Adiona aluno no banco caso não exista
                 for (int i = 0; i < tabelaNomes.getRowCount(); i++) {
