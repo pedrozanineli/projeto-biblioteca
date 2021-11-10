@@ -2,14 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package BD.entities;
+package BD.Entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -23,59 +25,62 @@ import javax.persistence.Table;
 @Table(name = "reserva")
 @NamedQueries({
     @NamedQuery(name = "Reserva.findAll", query = "SELECT r FROM Reserva r"),
-    @NamedQuery(name = "Reserva.findByCodReserva", query = "SELECT r FROM Reserva r WHERE r.codReserva = :codReserva"),
+    @NamedQuery(name = "Reserva.findByCodReserva", query = "SELECT r FROM Reserva r WHERE r.reservaPK.codReserva = :codReserva"),
     @NamedQuery(name = "Reserva.findByData", query = "SELECT r FROM Reserva r WHERE r.data = :data"),
     @NamedQuery(name = "Reserva.findByHorario", query = "SELECT r FROM Reserva r WHERE r.horario = :horario"),
-    @NamedQuery(name = "Reserva.findByRaEmReserva", query = "SELECT r.alunora FROM Reserva r WHERE r.codReserva= :codReserva")})
+    @NamedQuery(name = "Reserva.findBySalanumSala", query = "SELECT r FROM Reserva r WHERE r.reservaPK.salanumSala = :salanumSala")})
 public class Reserva implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
+    @EmbeddedId
+    protected ReservaPK reservaPK;
     @Basic(optional = false)
-    @Column(name = "codReserva")
-    private String codReserva;
-    @Basic(optional = false)
+    
     @Column(name = "Data")
     private String data;
     @Basic(optional = false)
     @Column(name = "Horario")
     private String horario;
-    @JoinColumn(name = "Aluno_ra", referencedColumnName = "ra")
+    @ManyToMany(mappedBy = "reservaList")
+    private List<Aluno> alunoList;
+    @JoinColumn(name = "Sala_numSala", referencedColumnName = "numSala", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Aluno alunora;
-    @JoinColumn(name = "Sala_numSala", referencedColumnName = "numSala")
-    @ManyToOne(optional = false)
-    private Sala salanumSala;
+    private Sala sala;
 
     public Reserva() {
     }
 
-    public Reserva(String codReserva, String data, String horario, Aluno alunora, Sala salanumSala) {
-        this.codReserva = codReserva;
+    public Reserva(ReservaPK reservaPK) {
+        this.reservaPK = reservaPK;
+    }
+
+    public Reserva(ReservaPK reservaPK, String data, String horario, List<Aluno> alunoList, Sala sala) {
+        this.reservaPK = reservaPK;
         this.data = data;
         this.horario = horario;
-        this.alunora = alunora;
-        this.salanumSala = salanumSala;
-    }
-    
-    
-
-    public Reserva(String codReserva) {
-        this.codReserva = codReserva;
+        this.alunoList = alunoList;
+        this.sala = sala;
     }
 
-    public Reserva(String codReserva, String data, String horario) {
-        this.codReserva = codReserva;
+    
+
+
+    public Reserva(ReservaPK reservaPK, String data, String horario) {
+        this.reservaPK = reservaPK;
         this.data = data;
         this.horario = horario;
     }
 
-    public String getCodReserva() {
-        return codReserva;
+    public Reserva(String codReserva, int salanumSala) {
+        this.reservaPK = new ReservaPK(codReserva, salanumSala);
     }
 
-    public void setCodReserva(String codReserva) {
-        this.codReserva = codReserva;
+    public ReservaPK getReservaPK() {
+        return reservaPK;
+    }
+
+    public void setReservaPK(ReservaPK reservaPK) {
+        this.reservaPK = reservaPK;
     }
 
     public String getData() {
@@ -94,26 +99,26 @@ public class Reserva implements Serializable {
         this.horario = horario;
     }
 
-    public Aluno getAlunora() {
-        return alunora;
+    public List<Aluno> getAlunoList() {
+        return alunoList;
     }
 
-    public void setAlunora(Aluno alunora) {
-        this.alunora = alunora;
+    public void setAlunoList(List<Aluno> alunoList) {
+        this.alunoList = alunoList;
     }
 
-    public Sala getSalanumSala() {
-        return salanumSala;
+    public Sala getSala() {
+        return sala;
     }
 
-    public void setSalanumSala(Sala salanumSala) {
-        this.salanumSala = salanumSala;
+    public void setSala(Sala sala) {
+        this.sala = sala;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (codReserva != null ? codReserva.hashCode() : 0);
+        hash += (reservaPK != null ? reservaPK.hashCode() : 0);
         return hash;
     }
 
@@ -124,7 +129,7 @@ public class Reserva implements Serializable {
             return false;
         }
         Reserva other = (Reserva) object;
-        if ((this.codReserva == null && other.codReserva != null) || (this.codReserva != null && !this.codReserva.equals(other.codReserva))) {
+        if ((this.reservaPK == null && other.reservaPK != null) || (this.reservaPK != null && !this.reservaPK.equals(other.reservaPK))) {
             return false;
         }
         return true;
@@ -132,7 +137,7 @@ public class Reserva implements Serializable {
 
     @Override
     public String toString() {
-        return codReserva;
+        return "BD.Entities.Reserva[ reservaPK=" + reservaPK + " ]";
     }
     
 }

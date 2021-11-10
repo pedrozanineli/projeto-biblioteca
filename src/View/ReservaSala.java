@@ -1,30 +1,57 @@
 package View;
 
+
+import BD.Entities.Aluno;
+import BD.Entities.Reserva;
+import BD.Entities.ReservaPK;
+import BD.Entities.Sala;
 import BD.controllers.ReservaJpaController;
 import BD.controllers.SalaJpaController;
-import BD.entities.Aluno;
-import BD.entities.Reserva;
-import BD.entities.Sala;
 import Utility.CellRenderer;
+import static java.lang.Integer.parseInt;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Persistence;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 public class ReservaSala extends javax.swing.JFrame {
     
     private TelaPrincipal tp;
+    private String user;
     
-    public ReservaSala(TelaPrincipal tp) {
+    
+    public ReservaSala(TelaPrincipal tp, String user) {
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/Images/Facamp_FavIcon.png")).getImage());
+        this.user = user;
         this.tp = tp;
-        //listaSalas.setCellRenderer(new CellRenderer(18));
+        setIconImage(new ImageIcon(getClass().getResource("/Images/Facamp_FavIcon.png")).getImage());
         setExtendedState(MAXIMIZED_BOTH);
-        popularLista();
         labelTexto.setText("Para " + tp.getTexto() + ", as seguintes salas indicadas abaixo estão disponíveis, selecione para continuar.");
+        popularLista();
+    }
+    
+    public void popularLista() {
+        DefaultListModel<Sala> modelo = new DefaultListModel();
+        listaSalas.setModel(modelo);
+        SalaJpaController sc = new SalaJpaController(Persistence.createEntityManagerFactory("BibliotecaTestePU"));
+        //List<Sala> salas = sc.findSalaEntities();
+        List<Sala> salas = tp.checarSalas();
+        for (Sala sala : salas) {
+            modelo.addElement(sala);
+        }
+    }
+    
+    public String codGerado;
+    
+    //Gerar codigo de reserva
+    public String gerarCod (){
+        if (Integer.parseInt(listaSalas.getSelectedValue().toString())<10){
+            return codGerado = "0" + listaSalas.getSelectedValue().toString() + tp.getDate().format(tp.formatCod) + (tp.getHorario()).substring(0,2);
+        }else{
+            return codGerado = listaSalas.getSelectedValue().toString() + tp.getDate().format(tp.formatCod) + (tp.getHorario()).substring(0,2);
+        }
     }
    
     @SuppressWarnings("unchecked")
@@ -42,7 +69,6 @@ public class ReservaSala extends javax.swing.JFrame {
         btnAgendar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("FACAMP");
 
         jPanel3.setBackground(new java.awt.Color(40, 91, 139));
 
@@ -70,9 +96,9 @@ public class ReservaSala extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setForeground(new java.awt.Color(102, 102, 102));
 
-        labelTexto.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        labelTexto.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
         labelTexto.setForeground(new java.awt.Color(102, 102, 102));
-        labelTexto.setText("Default Text");
+        labelTexto.setText("DefaultText");
         labelTexto.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -81,7 +107,7 @@ public class ReservaSala extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addComponent(labelTexto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(labelTexto, javax.swing.GroupLayout.DEFAULT_SIZE, 1003, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,7 +126,7 @@ public class ReservaSala extends javax.swing.JFrame {
             }
         });
 
-        listaSalas.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
+        listaSalas.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
         listaSalas.setForeground(new java.awt.Color(102, 102, 102));
         listaSalas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         listaSalas.setFixedCellHeight(100);
@@ -126,12 +152,15 @@ public class ReservaSala extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAgendar, javax.swing.GroupLayout.DEFAULT_SIZE, 1260, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1)
+                    .addComponent(btnAgendar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(14, 14, 14)
-                        .addComponent(btnVoltar1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnVoltar1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1))
+                        .addGap(13, 13, 13)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -152,57 +181,34 @@ public class ReservaSala extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void popularLista() {
-        DefaultListModel<Sala> modelo = new DefaultListModel();
-        listaSalas.setModel(modelo);
-        SalaJpaController sc = new SalaJpaController(Persistence.createEntityManagerFactory("ProjetoBibliotecaPU"));
-        //List<Sala> salas = sc.findSalaEntities();
-        List<Sala> salas = tp.checarSalas();
-        for (Sala sala : salas) {
-            modelo.addElement(sala);
-        }
-    }
-    
-    public String codGerado;
-    
-    //Gerar codigo de reserva
-    public String gerarCod (){
-        if (Integer.parseInt(listaSalas.getSelectedValue().toString())<10){
-            return codGerado = "0" + listaSalas.getSelectedValue().toString() + tp.getDate().format(tp.formatCod) + (tp.getHorario()).substring(0,2);
-        }else{
-            return codGerado = listaSalas.getSelectedValue().toString() + tp.getDate().format(tp.formatCod) + (tp.getHorario()).substring(0,2);
-        }
-    }
-
-    public JList<Sala> getListaSalas() {
-        return listaSalas;
-    }
-
-    public void setListaSalas(JList<Sala> listaSalas) {
-        this.listaSalas = listaSalas;
-    }
-    
     private void btnVoltar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltar1ActionPerformed
-        this.setVisible(false);
+        this.dispose();
         tp.setVisible(true);
     }//GEN-LAST:event_btnVoltar1ActionPerformed
 
     private void btnAgendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgendarActionPerformed
-         try {
-            for (int i = 0; i < tp.getTabelaNomes().getRowCount(); i++) {
-                String ra = tp.getTabelaNomes().getValueAt(i, 1).toString();
-                Aluno a = new Aluno();
-                a.setRa(ra);
-                ReservaJpaController rc = new ReservaJpaController(Persistence.createEntityManagerFactory("ProjetoBibliotecaPU"));
-                Reserva reserva = new Reserva(gerarCod(),tp.getData(), tp.getHorario(), a, listaSalas.getSelectedValue());
-                rc.create(reserva);
-            }
-            
-            SucessoReserva sr = new SucessoReserva(tp);
-            sr.setVisible(true);
-            this.dispose();
-
-        } catch (Exception e) {
+        
+        try{
+        ReservaJpaController rc = new ReservaJpaController(Persistence.createEntityManagerFactory("BibliotecaTestePU"));
+        List<Aluno> alunosAgendar = new ArrayList<>();
+        
+        //Cria lista de alunos pra reserva com base na tabela da Tela Principal
+        for (int i=0; i<tp.getTabelaNomes().getRowCount();i++){
+            String ra = tp.getTabelaNomes().getValueAt(i, 1).toString();
+            Aluno e =  new Aluno();
+            e.setRa(ra);
+            alunosAgendar.add(e);
+        }
+               
+        ReservaPK reservaPK = new ReservaPK(gerarCod(), parseInt(listaSalas.getSelectedValue().toString()));        
+        Reserva reserva = new Reserva(reservaPK, tp.getData(),tp.getHorario(),alunosAgendar,listaSalas.getSelectedValue());
+        rc.create(reserva);
+        
+        SucessoReserva sr = new SucessoReserva(user, tp);
+        sr.setVisible(true);
+        this.dispose();
+        
+        }catch(Exception e){
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnAgendarActionPerformed

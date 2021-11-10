@@ -4,16 +4,15 @@
  */
 package BD.controllers;
 
-import BD.controllers.exceptions.IllegalOrphanException;
-import BD.controllers.exceptions.NonexistentEntityException;
-import BD.controllers.exceptions.PreexistingEntityException;
-import BD.entities.Aluno;
+import BD.Entities.Aluno;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import BD.entities.Reserva;
+import BD.Entities.Reserva;
+import BD.controllers.exceptions.NonexistentEntityException;
+import BD.controllers.exceptions.PreexistingEntityException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -44,19 +43,14 @@ public class AlunoJpaController implements Serializable {
             em.getTransaction().begin();
             List<Reserva> attachedReservaList = new ArrayList<Reserva>();
             for (Reserva reservaListReservaToAttach : aluno.getReservaList()) {
-                reservaListReservaToAttach = em.getReference(reservaListReservaToAttach.getClass(), reservaListReservaToAttach.getCodReserva());
+                reservaListReservaToAttach = em.getReference(reservaListReservaToAttach.getClass(), reservaListReservaToAttach.getReservaPK());
                 attachedReservaList.add(reservaListReservaToAttach);
             }
             aluno.setReservaList(attachedReservaList);
             em.persist(aluno);
             for (Reserva reservaListReserva : aluno.getReservaList()) {
-                Aluno oldAlunoraOfReservaListReserva = reservaListReserva.getAlunora();
-                reservaListReserva.setAlunora(aluno);
+                reservaListReserva.getAlunoList().add(aluno);
                 reservaListReserva = em.merge(reservaListReserva);
-                if (oldAlunoraOfReservaListReserva != null) {
-                    oldAlunoraOfReservaListReserva.getReservaList().remove(reservaListReserva);
-                    oldAlunoraOfReservaListReserva = em.merge(oldAlunoraOfReservaListReserva);
-                }
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -71,7 +65,7 @@ public class AlunoJpaController implements Serializable {
         }
     }
 
-    public void edit(Aluno aluno) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public void edit(Aluno aluno) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -79,35 +73,24 @@ public class AlunoJpaController implements Serializable {
             Aluno persistentAluno = em.find(Aluno.class, aluno.getRa());
             List<Reserva> reservaListOld = persistentAluno.getReservaList();
             List<Reserva> reservaListNew = aluno.getReservaList();
-            List<String> illegalOrphanMessages = null;
-            for (Reserva reservaListOldReserva : reservaListOld) {
-                if (!reservaListNew.contains(reservaListOldReserva)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Reserva " + reservaListOldReserva + " since its alunora field is not nullable.");
-                }
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
             List<Reserva> attachedReservaListNew = new ArrayList<Reserva>();
             for (Reserva reservaListNewReservaToAttach : reservaListNew) {
-                reservaListNewReservaToAttach = em.getReference(reservaListNewReservaToAttach.getClass(), reservaListNewReservaToAttach.getCodReserva());
+                reservaListNewReservaToAttach = em.getReference(reservaListNewReservaToAttach.getClass(), reservaListNewReservaToAttach.getReservaPK());
                 attachedReservaListNew.add(reservaListNewReservaToAttach);
             }
             reservaListNew = attachedReservaListNew;
             aluno.setReservaList(reservaListNew);
             aluno = em.merge(aluno);
+            for (Reserva reservaListOldReserva : reservaListOld) {
+                if (!reservaListNew.contains(reservaListOldReserva)) {
+                    reservaListOldReserva.getAlunoList().remove(aluno);
+                    reservaListOldReserva = em.merge(reservaListOldReserva);
+                }
+            }
             for (Reserva reservaListNewReserva : reservaListNew) {
                 if (!reservaListOld.contains(reservaListNewReserva)) {
-                    Aluno oldAlunoraOfReservaListNewReserva = reservaListNewReserva.getAlunora();
-                    reservaListNewReserva.setAlunora(aluno);
+                    reservaListNewReserva.getAlunoList().add(aluno);
                     reservaListNewReserva = em.merge(reservaListNewReserva);
-                    if (oldAlunoraOfReservaListNewReserva != null && !oldAlunoraOfReservaListNewReserva.equals(aluno)) {
-                        oldAlunoraOfReservaListNewReserva.getReservaList().remove(reservaListNewReserva);
-                        oldAlunoraOfReservaListNewReserva = em.merge(oldAlunoraOfReservaListNewReserva);
-                    }
                 }
             }
             em.getTransaction().commit();
@@ -127,7 +110,7 @@ public class AlunoJpaController implements Serializable {
         }
     }
 
-    public void destroy(String id) throws IllegalOrphanException, NonexistentEntityException {
+    public void destroy(String id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -139,16 +122,10 @@ public class AlunoJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The aluno with id " + id + " no longer exists.", enfe);
             }
-            List<String> illegalOrphanMessages = null;
-            List<Reserva> reservaListOrphanCheck = aluno.getReservaList();
-            for (Reserva reservaListOrphanCheckReserva : reservaListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Aluno (" + aluno + ") cannot be destroyed since the Reserva " + reservaListOrphanCheckReserva + " in its reservaList field has a non-nullable alunora field.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
+            List<Reserva> reservaList = aluno.getReservaList();
+            for (Reserva reservaListReserva : reservaList) {
+                reservaListReserva.getAlunoList().remove(aluno);
+                reservaListReserva = em.merge(reservaListReserva);
             }
             em.remove(aluno);
             em.getTransaction().commit();

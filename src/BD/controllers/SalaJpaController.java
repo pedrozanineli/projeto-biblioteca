@@ -4,16 +4,16 @@
  */
 package BD.controllers;
 
-import BD.controllers.exceptions.IllegalOrphanException;
-import BD.controllers.exceptions.NonexistentEntityException;
-import BD.controllers.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import BD.entities.Reserva;
-import BD.entities.Sala;
+import BD.Entities.Reserva;
+import BD.Entities.Sala;
+import BD.controllers.exceptions.IllegalOrphanException;
+import BD.controllers.exceptions.NonexistentEntityException;
+import BD.controllers.exceptions.PreexistingEntityException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -44,18 +44,18 @@ public class SalaJpaController implements Serializable {
             em.getTransaction().begin();
             List<Reserva> attachedReservaList = new ArrayList<Reserva>();
             for (Reserva reservaListReservaToAttach : sala.getReservaList()) {
-                reservaListReservaToAttach = em.getReference(reservaListReservaToAttach.getClass(), reservaListReservaToAttach.getCodReserva());
+                reservaListReservaToAttach = em.getReference(reservaListReservaToAttach.getClass(), reservaListReservaToAttach.getReservaPK());
                 attachedReservaList.add(reservaListReservaToAttach);
             }
             sala.setReservaList(attachedReservaList);
             em.persist(sala);
             for (Reserva reservaListReserva : sala.getReservaList()) {
-                Sala oldSalanumSalaOfReservaListReserva = reservaListReserva.getSalanumSala();
-                reservaListReserva.setSalanumSala(sala);
+                Sala oldSalaOfReservaListReserva = reservaListReserva.getSala();
+                reservaListReserva.setSala(sala);
                 reservaListReserva = em.merge(reservaListReserva);
-                if (oldSalanumSalaOfReservaListReserva != null) {
-                    oldSalanumSalaOfReservaListReserva.getReservaList().remove(reservaListReserva);
-                    oldSalanumSalaOfReservaListReserva = em.merge(oldSalanumSalaOfReservaListReserva);
+                if (oldSalaOfReservaListReserva != null) {
+                    oldSalaOfReservaListReserva.getReservaList().remove(reservaListReserva);
+                    oldSalaOfReservaListReserva = em.merge(oldSalaOfReservaListReserva);
                 }
             }
             em.getTransaction().commit();
@@ -85,7 +85,7 @@ public class SalaJpaController implements Serializable {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Reserva " + reservaListOldReserva + " since its salanumSala field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Reserva " + reservaListOldReserva + " since its sala field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -93,7 +93,7 @@ public class SalaJpaController implements Serializable {
             }
             List<Reserva> attachedReservaListNew = new ArrayList<Reserva>();
             for (Reserva reservaListNewReservaToAttach : reservaListNew) {
-                reservaListNewReservaToAttach = em.getReference(reservaListNewReservaToAttach.getClass(), reservaListNewReservaToAttach.getCodReserva());
+                reservaListNewReservaToAttach = em.getReference(reservaListNewReservaToAttach.getClass(), reservaListNewReservaToAttach.getReservaPK());
                 attachedReservaListNew.add(reservaListNewReservaToAttach);
             }
             reservaListNew = attachedReservaListNew;
@@ -101,12 +101,12 @@ public class SalaJpaController implements Serializable {
             sala = em.merge(sala);
             for (Reserva reservaListNewReserva : reservaListNew) {
                 if (!reservaListOld.contains(reservaListNewReserva)) {
-                    Sala oldSalanumSalaOfReservaListNewReserva = reservaListNewReserva.getSalanumSala();
-                    reservaListNewReserva.setSalanumSala(sala);
+                    Sala oldSalaOfReservaListNewReserva = reservaListNewReserva.getSala();
+                    reservaListNewReserva.setSala(sala);
                     reservaListNewReserva = em.merge(reservaListNewReserva);
-                    if (oldSalanumSalaOfReservaListNewReserva != null && !oldSalanumSalaOfReservaListNewReserva.equals(sala)) {
-                        oldSalanumSalaOfReservaListNewReserva.getReservaList().remove(reservaListNewReserva);
-                        oldSalanumSalaOfReservaListNewReserva = em.merge(oldSalanumSalaOfReservaListNewReserva);
+                    if (oldSalaOfReservaListNewReserva != null && !oldSalaOfReservaListNewReserva.equals(sala)) {
+                        oldSalaOfReservaListNewReserva.getReservaList().remove(reservaListNewReserva);
+                        oldSalaOfReservaListNewReserva = em.merge(oldSalaOfReservaListNewReserva);
                     }
                 }
             }
@@ -145,7 +145,7 @@ public class SalaJpaController implements Serializable {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Sala (" + sala + ") cannot be destroyed since the Reserva " + reservaListOrphanCheckReserva + " in its reservaList field has a non-nullable salanumSala field.");
+                illegalOrphanMessages.add("This Sala (" + sala + ") cannot be destroyed since the Reserva " + reservaListOrphanCheckReserva + " in its reservaList field has a non-nullable sala field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);

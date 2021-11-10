@@ -1,13 +1,13 @@
 package View;
 
+import BD.Entities.Aluno;
+import BD.Entities.Reserva;
+import BD.Entities.Sala;
 import BD.controllers.AlunoJpaController;
-import BD.controllers.ReservaJpaController;
-import BD.entities.Aluno;
-import BD.entities.Reserva;
-import BD.entities.Sala;
 import Utility.CellRenderer;
 import java.awt.Font;
 import static java.awt.event.KeyEvent.VK_ENTER;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -21,21 +21,23 @@ import javax.swing.table.DefaultTableModel;
 
 public class TelaPrincipal extends javax.swing.JFrame {
 
-    public TelaPrincipal() {
+    public TelaPrincipal(String user) {
         initComponents();
+        this.user = user;
         setExtendedState(MAXIMIZED_BOTH);
-        setIconImage(new ImageIcon(getClass().getResource("/Images/Facamp_FavIcon.png")).getImage());
         configurarTabela();
         listaHorarios.setCellRenderer(new CellRenderer(14));
-
+        setIconImage(new ImageIcon(getClass().getResource("/Images/Facamp_FavIcon.png")).getImage());
+        setLocationRelativeTo(null);
     }
 
+    private String user;
     private String data;
     private String horario;
     private String lousa;
 
-    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM");
-    public DateTimeFormatter formatCod = DateTimeFormatter.ofPattern("MMdd");
+    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yy");
+    public DateTimeFormatter formatCod = DateTimeFormatter.ofPattern("ddMMyy");
     private LocalDateTime Hoje = LocalDateTime.now();
     private LocalDateTime Amanha = LocalDateTime.now().plusDays(1);
 
@@ -78,6 +80,49 @@ public class TelaPrincipal extends javax.swing.JFrame {
         return data + " às " + horario + " " + lousa;
     }
 
+    public String gerarFakeCod(int x) {
+        if (x < 10) {
+            return "0" + x + getDate().format(formatCod).toString() + listaHorarios.getSelectedValue().substring(0, 2);
+        } else {
+            return x + getDate().format(formatCod).toString() + listaHorarios.getSelectedValue().substring(0, 2);
+        }
+
+    }
+
+    public List<Sala> checarSalas() {
+        EntityManager em = Persistence.createEntityManagerFactory("BibliotecaTestePU").createEntityManager();
+        List<Sala> salasSLousa = em.createNamedQuery("Sala.findByLousa").setParameter("lousa", "Não").getResultList();
+        List<Sala> salaLousa = em.createNamedQuery("Sala.findByLousa").setParameter("lousa", "Sim").getResultList();
+        List<Sala> salas = new ArrayList<>();
+        List<Sala> salasDisponiveis = new ArrayList<>();
+        List<Reserva> reservas = em.createNamedQuery("Reserva.findAll").getResultList();
+        boolean existe = false;
+        int qntdAlunos = tabelaNomes.getRowCount();
+               
+        if (botaoLousaSim.isSelected()) {
+            salas = salaLousa;
+        } else if (botaoLousaNao.isSelected()) {
+            salas = salasSLousa;
+        }
+        
+
+        boolean aux;
+        for (Sala z : salas) {
+            String fakeCod = gerarFakeCod(z.getNumSala());
+            for (Reserva x : reservas) {
+                if ((x.getReservaPK().getCodReserva().equals(fakeCod))) {
+                    existe = true;
+                }
+            }
+            if (!existe) {
+                salasDisponiveis.add(z);
+            }
+            existe = false;
+
+        }
+        return salasDisponiveis;
+    }
+
     //Getters e Setters
     public String getData() {
         return data;
@@ -111,46 +156,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.tabelaNomes = tabelaNomes;
     }
 
-    public String gerarFakeCod(int x) {
-        if (x < 10) {
-            return "0" + x + getDate().format(formatCod).toString() + listaHorarios.getSelectedValue().substring(0,2);
-        } else {
-            return x + getDate().format(formatCod).toString() + listaHorarios.getSelectedValue().substring(0,2);
-        }
-
-    }
-
-    public List<Sala> checarSalas() {
-        EntityManager em = Persistence.createEntityManagerFactory("ProjetoBibliotecaPU").createEntityManager();
-        List<Sala> salasSLousa = em.createNamedQuery("Sala.findByLousa").setParameter("lousa", "Não").getResultList();
-        List<Sala> salaLousa = em.createNamedQuery("Sala.findByLousa").setParameter("lousa", "Sim").getResultList();
-        List<Sala> salas = new ArrayList<Sala>();
-        List<Sala> salasDisponiveis = new ArrayList<Sala>();
-        List<Reserva> reservas = em.createNamedQuery("Reserva.findAll").getResultList();
-        boolean existe = false;
-        if(botaoLousaSim.isSelected()){
-            salas = salaLousa;
-        }else if (botaoLousaNao.isSelected()){
-            salas = salasSLousa;
-        }
-        
-        boolean aux;
-        for (Sala z : salas) {
-            String fakeCod = gerarFakeCod(z.getNumSala());
-            for (Reserva x : reservas) {
-                if ((x.getCodReserva().equals(fakeCod))) {
-                    existe = true;
-                }
-            }
-            if (!existe) {
-                salasDisponiveis.add(z);  
-            }
-            existe = false;
-
-        }
-        return salasDisponiveis;
-    }
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -186,7 +191,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         botaoLousaSim = new javax.swing.JToggleButton();
         botaoLousaNao = new javax.swing.JToggleButton();
-        btnVoltar1 = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -223,7 +228,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel1.setText("Para utilizar as salas da biblioteca, escolha a partir dos horários disponíveis uma sala que não tenha sido reservada ainda.");
+        jLabel1.setText("Para utilizar as salas da biblioteca, escolha a partir dos horários uma sala que não tenha sido reservada ainda.");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -237,7 +242,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
+                .addContainerGap(17, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addContainerGap())
         );
@@ -289,8 +294,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(botaoDataHoje, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addComponent(botaoDataAmanha, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addComponent(botaoDataAmanha, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -300,8 +305,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botaoDataAmanha, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
-                    .addComponent(botaoDataHoje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(botaoDataAmanha, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
+                    .addComponent(botaoDataHoje, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE))
                 .addGap(31, 31, 31))
         );
 
@@ -342,7 +347,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -352,7 +357,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                        .addGap(0, 42, Short.MAX_VALUE)
+                        .addGap(0, 43, Short.MAX_VALUE)
                         .addComponent(jLabel5)
                         .addGap(46, 46, 46))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
@@ -370,10 +375,24 @@ public class TelaPrincipal extends javax.swing.JFrame {
             new String [] {
                 "Nome", "RA", "Email"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tabelaNomes.setRowHeight(30);
         jScrollPane2.setViewportView(tabelaNomes);
+        if (tabelaNomes.getColumnModel().getColumnCount() > 0) {
+            tabelaNomes.getColumnModel().getColumn(0).setResizable(false);
+            tabelaNomes.getColumnModel().getColumn(1).setResizable(false);
+            tabelaNomes.getColumnModel().getColumn(2).setResizable(false);
+        }
 
+        rmvAluno.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
         rmvAluno.setForeground(new java.awt.Color(102, 102, 102));
         rmvAluno.setText("Remover Aluno");
         rmvAluno.setEnabled(false);
@@ -383,6 +402,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        addAluno.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
         addAluno.setForeground(new java.awt.Color(102, 102, 102));
         addAluno.setText("Adicionar Aluno");
         addAluno.addActionListener(new java.awt.event.ActionListener() {
@@ -433,15 +453,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 756, Short.MAX_VALUE)
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel10Layout.createSequentialGroup()
                                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel8))
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel7))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(raAluno)
                                     .addComponent(nomeAluno)))
                             .addGroup(jPanel10Layout.createSequentialGroup()
@@ -451,16 +471,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel10Layout.createSequentialGroup()
                                 .addGap(28, 28, 28)
-                                .addComponent(addAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(addAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rmvAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(rmvAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(14, 14, 14)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -475,11 +495,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                             .addComponent(emailAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9)))
                     .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(addAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(addAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(rmvAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(28, 28, 28)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+                        .addComponent(rmvAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
                 .addGap(28, 28, 28))
         );
 
@@ -522,7 +542,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(botaoLousaSim, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                         .addComponent(botaoLousaNao, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -533,22 +553,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botaoLousaNao, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
-                    .addComponent(botaoLousaSim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(botaoLousaNao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(botaoLousaSim, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE))
                 .addGap(29, 29, 29))
         );
 
-        btnVoltar1.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
-        btnVoltar1.setForeground(new java.awt.Color(102, 102, 102));
-        btnVoltar1.setText("Voltar");
-        btnVoltar1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnVoltar1MouseClicked(evt);
-            }
-        });
-        btnVoltar1.addActionListener(new java.awt.event.ActionListener() {
+        btnVoltar.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
+        btnVoltar.setForeground(new java.awt.Color(102, 102, 102));
+        btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVoltar1ActionPerformed(evt);
+                btnVoltarActionPerformed(evt);
             }
         });
 
@@ -563,10 +578,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1066, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnVoltar1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1018, Short.MAX_VALUE)
+                                .addGap(28, 28, 28)
+                                .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -584,7 +599,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                    .addComponent(btnVoltar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnVoltar, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -592,7 +607,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
                         .addGap(11, 11, 11)
-                        .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE))
+                        .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
                     .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -612,10 +627,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 throw new Exception("Preencha todos os dados");
 
             } else {
-                AlunoJpaController ac = new AlunoJpaController(Persistence.createEntityManagerFactory("ProjetoBibliotecaPU"));
-                EntityManager em = Persistence.createEntityManagerFactory("ProjetoBibliotecaPU").createEntityManager();
+                AlunoJpaController ac = new AlunoJpaController(Persistence.createEntityManagerFactory("BibliotecaTestePU"));
+                EntityManager em = Persistence.createEntityManagerFactory("BibliotecaTestePU").createEntityManager();
                 boolean existe = false;
-                //Aluno teste = (Aluno) em.createNamedQuery("Aluno.findByRa").getResultList();
                 List<Aluno> teste = em.createNamedQuery("Aluno.findAll").getResultList();
 
                 for (int i = 0; i < tabelaNomes.getRowCount(); i++) {
@@ -633,7 +647,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
                     existe = false;
                 }
-                ReservaSala rs = new ReservaSala(this);
+
+                if (checarSalas().size() == 0) {
+                    throw new Exception("Não há salas disponíveis nessas condições");
+                }
+
+                if (botaoDataHoje.isSelected()) {
+                    if (Integer.parseInt(listaHorarios.getSelectedValue().substring(0, 2)) < Hoje.getHour()) {
+                        throw new Exception ("Horário Inválido");
+                    }
+                }
+
+                ReservaSala rs = new ReservaSala(this, user);
                 this.setVisible(false);
                 rs.setVisible(true);
             }
@@ -659,20 +684,29 @@ public class TelaPrincipal extends javax.swing.JFrame {
         botaoLousaSim.setSelected(false);
     }//GEN-LAST:event_botaoLousaNaoActionPerformed
 
-    private void btnVoltar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltar1ActionPerformed
-        int resposta = JOptionPane.showConfirmDialog(null, "Você deseja mesmo sair?");
-        if (resposta == JOptionPane.YES_OPTION) {
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        if (user.equals("Alunos")) {
             TelaLogin tl = new TelaLogin();
             tl.setVisible(true);
-            TelaPrincipal.super.dispose();
+            this.dispose();
+        } else {
+            TelaAdmin ta = new TelaAdmin();
+            ta.setVisible(true);
+            this.dispose();
         }
-    }//GEN-LAST:event_btnVoltar1ActionPerformed
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void addAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAlunoActionPerformed
         try {
 
             if (nomeAluno.getText().equals("") || raAluno.getText().equals("") || emailAluno.getText().equals("")) {
                 throw new Exception("Preencha os campos para adicionar o aluno");
+            }
+            
+            for(int i=0; i<tabelaNomes.getRowCount(); i++){
+                if (raAluno.getText().toString().equals(tabelaNomes.getValueAt(i,1))){
+                    throw new Exception ("Aluno já adicionado");
+                }
             }
 
             DefaultTableModel modelo = ((DefaultTableModel) tabelaNomes.getModel());
@@ -725,25 +759,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_raAlunoActionPerformed
 
-    private void btnVoltar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVoltar1MouseClicked
-        if (evt.getClickCount() == 1){
-            
-        }
-    }//GEN-LAST:event_btnVoltar1MouseClicked
-
     private void raAlunoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_raAlunoKeyPressed
-        if(evt.getKeyCode()==VK_ENTER){
-            EntityManager em = Persistence.createEntityManagerFactory("ProjetoBibliotecaPU").createEntityManager();
-            try {    
+        if (evt.getKeyCode() == VK_ENTER) {
+            EntityManager em = Persistence.createEntityManagerFactory("BibliotecaTestePU").createEntityManager();
+            try {
                 Aluno a = (Aluno) em.createNamedQuery("Aluno.findByRa").setParameter("ra", raAluno.getText().toString()).getSingleResult();
-                
+
                 // System.out.println(a.);
-                
                 nomeAluno.setText(a.getNome().toString());
                 emailAluno.setText(a.getEmail().toString());
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aluno não cadastrado", JOptionPane.ERROR_MESSAGE);
-            }       
+            }
         }
     }//GEN-LAST:event_raAlunoKeyPressed
 
@@ -754,7 +781,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JToggleButton botaoLousaNao;
     private javax.swing.JToggleButton botaoLousaSim;
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnVoltar1;
+    private javax.swing.JButton btnVoltar;
     private javax.swing.JTextField emailAluno;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

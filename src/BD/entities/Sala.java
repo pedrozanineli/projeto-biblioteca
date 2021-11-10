@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package BD.entities;
+package BD.Entities;
 
 import java.io.Serializable;
 import java.util.List;
@@ -40,7 +40,7 @@ public class Sala implements Serializable {
     @Basic(optional = false)
     @Column(name = "lousa")
     private String lousa;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "salanumSala")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sala")
     private List<Reserva> reservaList;
 
     public Sala() {

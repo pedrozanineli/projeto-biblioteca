@@ -4,9 +4,9 @@
  */
 package BD.controllers;
 
+import BD.Entities.Login;
 import BD.controllers.exceptions.NonexistentEntityException;
 import BD.controllers.exceptions.PreexistingEntityException;
-import BD.entities.Login;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;

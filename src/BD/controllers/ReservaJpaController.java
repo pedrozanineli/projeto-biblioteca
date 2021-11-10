@@ -4,16 +4,18 @@
  */
 package BD.controllers;
 
-import BD.controllers.exceptions.NonexistentEntityException;
-import BD.controllers.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import BD.entities.Aluno;
-import BD.entities.Reserva;
-import BD.entities.Sala;
+import BD.Entities.Sala;
+import BD.Entities.Aluno;
+import BD.Entities.Reserva;
+import BD.Entities.ReservaPK;
+import BD.controllers.exceptions.NonexistentEntityException;
+import BD.controllers.exceptions.PreexistingEntityException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -34,32 +36,40 @@ public class ReservaJpaController implements Serializable {
     }
 
     public void create(Reserva reserva) throws PreexistingEntityException, Exception {
+        if (reserva.getReservaPK() == null) {
+            reserva.setReservaPK(new ReservaPK());
+        }
+        if (reserva.getAlunoList() == null) {
+            reserva.setAlunoList(new ArrayList<Aluno>());
+        }
+        reserva.getReservaPK().setSalanumSala(reserva.getSala().getNumSala());
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Aluno alunora = reserva.getAlunora();
-            if (alunora != null) {
-                alunora = em.getReference(alunora.getClass(), alunora.getRa());
-                reserva.setAlunora(alunora);
+            Sala sala = reserva.getSala();
+            if (sala != null) {
+                sala = em.getReference(sala.getClass(), sala.getNumSala());
+                reserva.setSala(sala);
             }
-            Sala salanumSala = reserva.getSalanumSala();
-            if (salanumSala != null) {
-                salanumSala = em.getReference(salanumSala.getClass(), salanumSala.getNumSala());
-                reserva.setSalanumSala(salanumSala);
+            List<Aluno> attachedAlunoList = new ArrayList<Aluno>();
+            for (Aluno alunoListAlunoToAttach : reserva.getAlunoList()) {
+                alunoListAlunoToAttach = em.getReference(alunoListAlunoToAttach.getClass(), alunoListAlunoToAttach.getRa());
+                attachedAlunoList.add(alunoListAlunoToAttach);
             }
+            reserva.setAlunoList(attachedAlunoList);
             em.persist(reserva);
-            if (alunora != null) {
-                alunora.getReservaList().add(reserva);
-                alunora = em.merge(alunora);
+            if (sala != null) {
+                sala.getReservaList().add(reserva);
+                sala = em.merge(sala);
             }
-            if (salanumSala != null) {
-                salanumSala.getReservaList().add(reserva);
-                salanumSala = em.merge(salanumSala);
+            for (Aluno alunoListAluno : reserva.getAlunoList()) {
+                alunoListAluno.getReservaList().add(reserva);
+                alunoListAluno = em.merge(alunoListAluno);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
-            if (findReserva(reserva.getCodReserva()) != null) {
+            if (findReserva(reserva.getReservaPK()) != null) {
                 throw new PreexistingEntityException("Reserva " + reserva + " already exists.", ex);
             }
             throw ex;
@@ -71,45 +81,53 @@ public class ReservaJpaController implements Serializable {
     }
 
     public void edit(Reserva reserva) throws NonexistentEntityException, Exception {
+        reserva.getReservaPK().setSalanumSala(reserva.getSala().getNumSala());
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Reserva persistentReserva = em.find(Reserva.class, reserva.getCodReserva());
-            Aluno alunoraOld = persistentReserva.getAlunora();
-            Aluno alunoraNew = reserva.getAlunora();
-            Sala salanumSalaOld = persistentReserva.getSalanumSala();
-            Sala salanumSalaNew = reserva.getSalanumSala();
-            if (alunoraNew != null) {
-                alunoraNew = em.getReference(alunoraNew.getClass(), alunoraNew.getRa());
-                reserva.setAlunora(alunoraNew);
+            Reserva persistentReserva = em.find(Reserva.class, reserva.getReservaPK());
+            Sala salaOld = persistentReserva.getSala();
+            Sala salaNew = reserva.getSala();
+            List<Aluno> alunoListOld = persistentReserva.getAlunoList();
+            List<Aluno> alunoListNew = reserva.getAlunoList();
+            if (salaNew != null) {
+                salaNew = em.getReference(salaNew.getClass(), salaNew.getNumSala());
+                reserva.setSala(salaNew);
             }
-            if (salanumSalaNew != null) {
-                salanumSalaNew = em.getReference(salanumSalaNew.getClass(), salanumSalaNew.getNumSala());
-                reserva.setSalanumSala(salanumSalaNew);
+            List<Aluno> attachedAlunoListNew = new ArrayList<Aluno>();
+            for (Aluno alunoListNewAlunoToAttach : alunoListNew) {
+                alunoListNewAlunoToAttach = em.getReference(alunoListNewAlunoToAttach.getClass(), alunoListNewAlunoToAttach.getRa());
+                attachedAlunoListNew.add(alunoListNewAlunoToAttach);
             }
+            alunoListNew = attachedAlunoListNew;
+            reserva.setAlunoList(alunoListNew);
             reserva = em.merge(reserva);
-            if (alunoraOld != null && !alunoraOld.equals(alunoraNew)) {
-                alunoraOld.getReservaList().remove(reserva);
-                alunoraOld = em.merge(alunoraOld);
+            if (salaOld != null && !salaOld.equals(salaNew)) {
+                salaOld.getReservaList().remove(reserva);
+                salaOld = em.merge(salaOld);
             }
-            if (alunoraNew != null && !alunoraNew.equals(alunoraOld)) {
-                alunoraNew.getReservaList().add(reserva);
-                alunoraNew = em.merge(alunoraNew);
+            if (salaNew != null && !salaNew.equals(salaOld)) {
+                salaNew.getReservaList().add(reserva);
+                salaNew = em.merge(salaNew);
             }
-            if (salanumSalaOld != null && !salanumSalaOld.equals(salanumSalaNew)) {
-                salanumSalaOld.getReservaList().remove(reserva);
-                salanumSalaOld = em.merge(salanumSalaOld);
+            for (Aluno alunoListOldAluno : alunoListOld) {
+                if (!alunoListNew.contains(alunoListOldAluno)) {
+                    alunoListOldAluno.getReservaList().remove(reserva);
+                    alunoListOldAluno = em.merge(alunoListOldAluno);
+                }
             }
-            if (salanumSalaNew != null && !salanumSalaNew.equals(salanumSalaOld)) {
-                salanumSalaNew.getReservaList().add(reserva);
-                salanumSalaNew = em.merge(salanumSalaNew);
+            for (Aluno alunoListNewAluno : alunoListNew) {
+                if (!alunoListOld.contains(alunoListNewAluno)) {
+                    alunoListNewAluno.getReservaList().add(reserva);
+                    alunoListNewAluno = em.merge(alunoListNewAluno);
+                }
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                String id = reserva.getCodReserva();
+                ReservaPK id = reserva.getReservaPK();
                 if (findReserva(id) == null) {
                     throw new NonexistentEntityException("The reserva with id " + id + " no longer exists.");
                 }
@@ -122,7 +140,7 @@ public class ReservaJpaController implements Serializable {
         }
     }
 
-    public void destroy(String id) throws NonexistentEntityException {
+    public void destroy(ReservaPK id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -130,19 +148,19 @@ public class ReservaJpaController implements Serializable {
             Reserva reserva;
             try {
                 reserva = em.getReference(Reserva.class, id);
-                reserva.getCodReserva();
+                reserva.getReservaPK();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The reserva with id " + id + " no longer exists.", enfe);
             }
-            Aluno alunora = reserva.getAlunora();
-            if (alunora != null) {
-                alunora.getReservaList().remove(reserva);
-                alunora = em.merge(alunora);
+            Sala sala = reserva.getSala();
+            if (sala != null) {
+                sala.getReservaList().remove(reserva);
+                sala = em.merge(sala);
             }
-            Sala salanumSala = reserva.getSalanumSala();
-            if (salanumSala != null) {
-                salanumSala.getReservaList().remove(reserva);
-                salanumSala = em.merge(salanumSala);
+            List<Aluno> alunoList = reserva.getAlunoList();
+            for (Aluno alunoListAluno : alunoList) {
+                alunoListAluno.getReservaList().remove(reserva);
+                alunoListAluno = em.merge(alunoListAluno);
             }
             em.remove(reserva);
             em.getTransaction().commit();
@@ -177,7 +195,7 @@ public class ReservaJpaController implements Serializable {
         }
     }
 
-    public Reserva findReserva(String id) {
+    public Reserva findReserva(ReservaPK id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Reserva.class, id);

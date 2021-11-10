@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package BD.entities;
+package BD.Entities;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -84,7 +84,7 @@ public class Login implements Serializable {
 
     @Override
     public String toString() {
-        return "BD.entities.Login[ usuario=" + usuario + " ]";
+        return "BD.Entities.Login[ usuario=" + usuario + " ]";
     }
     
 }

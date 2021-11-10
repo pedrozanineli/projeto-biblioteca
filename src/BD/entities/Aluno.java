@@ -2,18 +2,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package BD.entities;
+package BD.Entities;
 
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -40,7 +41,11 @@ public class Aluno implements Serializable {
     @Basic(optional = false)
     @Column(name = "email")
     private String email;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "alunora")
+    @JoinTable(name = "reserva_has_aluno", joinColumns = {
+        @JoinColumn(name = "Aluno_ra", referencedColumnName = "ra")}, inverseJoinColumns = {
+        @JoinColumn(name = "Reserva_codReserva", referencedColumnName = "codReserva"),
+        @JoinColumn(name = "Reserva_Sala_numSala", referencedColumnName = "Sala_numSala")})
+    @ManyToMany
     private List<Reserva> reservaList;
 
     public Aluno() {
@@ -110,7 +115,7 @@ public class Aluno implements Serializable {
 
     @Override
     public String toString() {
-        return ra;
+        return "BD.Entities.Aluno[ ra=" + ra + " ]";
     }
     
 }
