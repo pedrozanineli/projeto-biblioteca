@@ -55,7 +55,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private String y = String.valueOf(Amanha);
 
     public void configurarTabela() {
-        tabelaNomes.getTableHeader().setFont(new Font("Roboto Condensed", Font.PLAIN, 24));
+        tabelaNomes.getTableHeader().setFont(new Font("Roboto Condensed", Font.BOLD, 24));
         tabelaNomes.getTableHeader().setForeground(new Color(102,102,102));
         tabelaNomes.setRowHeight(30);
         tabelaNomes.getColumnModel().getColumn(0).setPreferredWidth(210);
@@ -416,6 +416,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         tabelaNomes.setRowHeight(30);
+        tabelaNomes.setSelectionBackground(new java.awt.Color(40, 91, 139));
         tabelaNomes.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tabelaNomes);
         if (tabelaNomes.getColumnModel().getColumnCount() > 0) {

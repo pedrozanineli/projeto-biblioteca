@@ -40,7 +40,7 @@ public class TelaAdmin extends javax.swing.JFrame {
     }
 
     public void configurarTabela() {
-        tabela.getTableHeader().setFont(new Font("Roboto Condensed", Font.PLAIN, 24));
+        tabela.getTableHeader().setFont(new Font("Roboto Condensed", Font.BOLD, 24));
         tabela.setRowHeight(30);
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -97,7 +97,8 @@ public class TelaAdmin extends javax.swing.JFrame {
         setTitle("FACAMP");
         setUndecorated(true);
 
-        tabela.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
+        tabela.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
+        tabela.setForeground(new java.awt.Color(102, 102, 102));
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -121,6 +122,7 @@ public class TelaAdmin extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabela.setSelectionBackground(new java.awt.Color(40, 91, 139));
         tabela.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabela.getTableHeader().setReorderingAllowed(false);
         tabela.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -164,7 +166,7 @@ public class TelaAdmin extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(1060, 50));
 
-        jLabel1.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
         jLabel1.setText("As salas reservadas com os respectivos alunos que a agendaram podem ser conferidas na tabela abaixo:");
 
@@ -174,8 +176,8 @@ public class TelaAdmin extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 971, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1029, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,9 +187,10 @@ public class TelaAdmin extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        btnVoltar.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
+        btnVoltar.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         btnVoltar.setForeground(new java.awt.Color(102, 102, 102));
-        btnVoltar.setText("️Voltar");
+        btnVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/setaVoltarIcone.png"))); // NOI18N
+        btnVoltar.setText("  ️Voltar");
         btnVoltar.setPreferredSize(new java.awt.Dimension(75, 30));
         btnVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -195,7 +198,7 @@ public class TelaAdmin extends javax.swing.JFrame {
             }
         });
 
-        btnCancelar.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
+        btnCancelar.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         btnCancelar.setForeground(new java.awt.Color(102, 102, 102));
         btnCancelar.setText("Cancelar Reserva");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -204,7 +207,7 @@ public class TelaAdmin extends javax.swing.JFrame {
             }
         });
 
-        botaoReservar.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
+        botaoReservar.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         botaoReservar.setForeground(new java.awt.Color(102, 102, 102));
         botaoReservar.setText("Reservar Sala");
         botaoReservar.addActionListener(new java.awt.event.ActionListener() {
@@ -213,9 +216,10 @@ public class TelaAdmin extends javax.swing.JFrame {
             }
         });
 
+        labelData.setForeground(new java.awt.Color(102, 102, 102));
         labelData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yy"))));
         labelData.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        labelData.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
+        labelData.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         labelData.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 labelDataMouseClicked(evt);
@@ -227,10 +231,12 @@ public class TelaAdmin extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(102, 102, 102));
         jLabel3.setText("Data das reservas:");
 
-        btnFiltrar.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
+        btnFiltrar.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
+        btnFiltrar.setForeground(new java.awt.Color(102, 102, 102));
         btnFiltrar.setText("Filtrar");
         btnFiltrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -274,13 +280,12 @@ public class TelaAdmin extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnVoltar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnFiltrar, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFiltrar))
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)

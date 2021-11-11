@@ -36,8 +36,6 @@ public class ReservaSala extends javax.swing.JFrame {
     public void popularLista() {
         DefaultListModel<Sala> modelo = new DefaultListModel();
         listaSalas.setModel(modelo);
-        SalaJpaController sc = new SalaJpaController(Persistence.createEntityManagerFactory("BibliotecaTestePU"));
-        //List<Sala> salas = sc.findSalaEntities();
         List<Sala> salas = tp.checarSalas();
         for (Sala sala : salas) {
             modelo.addElement(sala);
@@ -132,15 +130,22 @@ public class ReservaSala extends javax.swing.JFrame {
         listaSalas.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         listaSalas.setForeground(new java.awt.Color(102, 102, 102));
         listaSalas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        listaSalas.setFixedCellHeight(100);
-        listaSalas.setFixedCellWidth(315);
-        listaSalas.setLayoutOrientation(javax.swing.JList.VERTICAL_WRAP);
+        listaSalas.setFixedCellHeight(150);
+        listaSalas.setFixedCellWidth(1270);
+        listaSalas.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
+        listaSalas.setSelectionBackground(new java.awt.Color(40, 91, 139));
         listaSalas.setVisibleRowCount(4);
+        listaSalas.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                listaSalasFocusGained(evt);
+            }
+        });
         jScrollPane1.setViewportView(listaSalas);
 
         btnAgendar.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         btnAgendar.setForeground(new java.awt.Color(102, 102, 102));
         btnAgendar.setText("Agendar");
+        btnAgendar.setEnabled(false);
         btnAgendar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgendarActionPerformed(evt);
@@ -152,19 +157,16 @@ public class ReservaSala extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnAgendar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnVoltar1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1))
-                        .addGap(13, 13, 13)))
-                .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnVoltar1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(19, 19, 19))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,6 +217,10 @@ public class ReservaSala extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnAgendarActionPerformed
+
+    private void listaSalasFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_listaSalasFocusGained
+        btnAgendar.setEnabled(true);
+    }//GEN-LAST:event_listaSalasFocusGained
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgendar;

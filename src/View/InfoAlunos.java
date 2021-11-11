@@ -90,6 +90,7 @@ public class InfoAlunos extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        tabela.setSelectionBackground(new java.awt.Color(40, 91, 139));
         tabela.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tabela);
 
