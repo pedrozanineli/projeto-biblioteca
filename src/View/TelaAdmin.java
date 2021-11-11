@@ -7,6 +7,7 @@ package View;
 
 import BD.Entities.Reserva;
 import BD.controllers.ReservaJpaController;
+import java.awt.Color;
 import java.awt.Font;
 import static java.awt.event.KeyEvent.VK_ENTER;
 import java.time.LocalDateTime;
@@ -39,11 +40,12 @@ public class TelaAdmin extends javax.swing.JFrame {
     }
 
     public void configurarTabela() {
-        tabela.getTableHeader().setFont(new Font("Roboto Condensed", Font.PLAIN, 16));
+        tabela.getTableHeader().setFont(new Font("Roboto Condensed", Font.PLAIN, 24));
         tabela.setRowHeight(30);
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         tabela.setDefaultRenderer(String.class, centerRenderer);
+        tabela.getTableHeader().setForeground(new Color(102,102,102));
 
         for (int x = 0; x < tabela.getColumnCount(); x++) {
             tabela.getColumnModel().getColumn(x).setCellRenderer(centerRenderer);

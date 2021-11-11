@@ -99,9 +99,10 @@ public class SucessoReserva extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        btnVoltar.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
+        btnVoltar.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         btnVoltar.setForeground(new java.awt.Color(102, 102, 102));
-        btnVoltar.setText("Voltar");
+        btnVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/setaVoltarIcone.png"))); // NOI18N
+        btnVoltar.setText("  Voltar");
         btnVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVoltarActionPerformed(evt);
@@ -111,7 +112,7 @@ public class SucessoReserva extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setForeground(new java.awt.Color(102, 102, 102));
 
-        labelTexto.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
+        labelTexto.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         labelTexto.setForeground(new java.awt.Color(102, 102, 102));
         labelTexto.setText("DefaultText");
         labelTexto.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -151,7 +152,7 @@ public class SucessoReserva extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 478, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 471, Short.MAX_VALUE)
                 .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
         );

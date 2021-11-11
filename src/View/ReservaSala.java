@@ -30,6 +30,7 @@ public class ReservaSala extends javax.swing.JFrame {
         setExtendedState(MAXIMIZED_BOTH);
         labelTexto.setText("Para " + tp.getTexto() + ", as seguintes salas indicadas abaixo estão disponíveis, selecione para continuar.");
         popularLista();
+        listaSalas.setCellRenderer(new CellRenderer(24));
     }
     
     public void popularLista() {
@@ -97,7 +98,7 @@ public class ReservaSala extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setForeground(new java.awt.Color(102, 102, 102));
 
-        labelTexto.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
+        labelTexto.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         labelTexto.setForeground(new java.awt.Color(102, 102, 102));
         labelTexto.setText("DefaultText");
         labelTexto.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -118,16 +119,17 @@ public class ReservaSala extends javax.swing.JFrame {
                 .addGap(17, 17, 17))
         );
 
-        btnVoltar1.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
+        btnVoltar1.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         btnVoltar1.setForeground(new java.awt.Color(102, 102, 102));
-        btnVoltar1.setText("Voltar");
+        btnVoltar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/setaVoltarIcone.png"))); // NOI18N
+        btnVoltar1.setText("  Voltar");
         btnVoltar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVoltar1ActionPerformed(evt);
             }
         });
 
-        listaSalas.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
+        listaSalas.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         listaSalas.setForeground(new java.awt.Color(102, 102, 102));
         listaSalas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         listaSalas.setFixedCellHeight(100);
@@ -136,7 +138,7 @@ public class ReservaSala extends javax.swing.JFrame {
         listaSalas.setVisibleRowCount(4);
         jScrollPane1.setViewportView(listaSalas);
 
-        btnAgendar.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
+        btnAgendar.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         btnAgendar.setForeground(new java.awt.Color(102, 102, 102));
         btnAgendar.setText("Agendar");
         btnAgendar.addActionListener(new java.awt.event.ActionListener() {
@@ -168,12 +170,12 @@ public class ReservaSala extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnVoltar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(btnAgendar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())

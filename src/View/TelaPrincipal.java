@@ -5,6 +5,7 @@ import BD.Entities.Reserva;
 import BD.Entities.Sala;
 import BD.controllers.AlunoJpaController;
 import Utility.CellRenderer;
+import java.awt.Color;
 import java.awt.Font;
 import static java.awt.event.KeyEvent.VK_ENTER;
 import java.time.LocalDateTime;
@@ -28,7 +29,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.user = user;
         setExtendedState(MAXIMIZED_BOTH);
         configurarTabela();
-        listaHorarios.setCellRenderer(new CellRenderer(14));
+        listaHorarios.setCellRenderer(new CellRenderer(24));
         setIconImage(new ImageIcon(getClass().getResource("/Images/Facamp_FavIcon.png")).getImage());
         setLocationRelativeTo(null);
 
@@ -54,7 +55,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private String y = String.valueOf(Amanha);
 
     public void configurarTabela() {
-        tabelaNomes.getTableHeader().setFont(new Font("Roboto Condensed", Font.PLAIN, 14));
+        tabelaNomes.getTableHeader().setFont(new Font("Roboto Condensed", Font.PLAIN, 24));
+        tabelaNomes.getTableHeader().setForeground(new Color(102,102,102));
         tabelaNomes.setRowHeight(30);
         tabelaNomes.getColumnModel().getColumn(0).setPreferredWidth(210);
         tabelaNomes.getColumnModel().getColumn(1).setPreferredWidth(148);
@@ -200,12 +202,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         emailAluno = new javax.swing.JTextField();
         raAluno = new javax.swing.JFormattedTextField();
+        btnVoltar = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         botaoLousaSim = new javax.swing.JToggleButton();
         botaoLousaNao = new javax.swing.JToggleButton();
-        jLabel10 = new javax.swing.JLabel();
-        btnVoltar = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -241,7 +242,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(1222, 90));
 
-        jLabel1.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
         jLabel1.setText("Para utilizar as salas da biblioteca, preencha os campos e busque uma sala disponível");
 
@@ -256,16 +257,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         btnBuscar.setBackground(new java.awt.Color(189, 189, 189));
-        btnBuscar.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
+        btnBuscar.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(102, 102, 102));
         btnBuscar.setText("Buscar");
+        btnBuscar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
@@ -273,15 +275,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel7.setPreferredSize(new java.awt.Dimension(1222, 90));
         jPanel7.setRequestFocusEnabled(false);
 
-        jLabel2.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel2.setText("Data");
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/calendario.png"))); // NOI18N
+        jLabel2.setText("  Data");
 
         botaoDataHoje.setBackground(new java.awt.Color(189, 189, 189));
-        botaoDataHoje.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
+        botaoDataHoje.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         botaoDataHoje.setForeground(new java.awt.Color(102, 102, 102));
         botaoDataHoje.setText("Hoje");
         botaoDataHoje.addActionListener(new java.awt.event.ActionListener() {
@@ -291,7 +295,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
 
         botaoDataAmanha.setBackground(new java.awt.Color(189, 189, 189));
-        botaoDataAmanha.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
+        botaoDataAmanha.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         botaoDataAmanha.setForeground(new java.awt.Color(102, 102, 102));
         botaoDataAmanha.setText("Amanhã");
         botaoDataAmanha.addActionListener(new java.awt.event.ActionListener() {
@@ -309,7 +313,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(botaoDataHoje, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                         .addComponent(botaoDataAmanha, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(jLabel2)
@@ -323,20 +327,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botaoDataAmanha, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
-                    .addComponent(botaoDataHoje, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE))
+                    .addComponent(botaoDataAmanha, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                    .addComponent(botaoDataHoje, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE))
                 .addGap(31, 31, 31))
         );
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel8.setPreferredSize(new java.awt.Dimension(1222, 90));
 
-        jLabel4.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel4.setText("Horário");
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/relogioIcon.png"))); // NOI18N
+        jLabel4.setText("  Horário");
 
-        listaHorarios.setBackground(new java.awt.Color(220, 220, 220));
-        listaHorarios.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
+        listaHorarios.setBackground(new java.awt.Color(255, 255, 255));
+        listaHorarios.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        listaHorarios.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         listaHorarios.setForeground(new java.awt.Color(102, 102, 102));
         listaHorarios.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00\t", "17:00\t", "18:00\t", "19:00" };
@@ -344,10 +351,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
             public String getElementAt(int i) { return strings[i]; }
         });
         listaHorarios.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        listaHorarios.setFixedCellHeight(50);
-        listaHorarios.setFixedCellWidth(215);
+        listaHorarios.setAutoscrolls(false);
+        listaHorarios.setFixedCellHeight(71);
+        listaHorarios.setFixedCellWidth(228);
         listaHorarios.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
         listaHorarios.setSelectionBackground(new java.awt.Color(40, 91, 139));
+        listaHorarios.setVisibleRowCount(6);
         jScrollPane1.setViewportView(listaHorarios);
 
         jLabel5.setFont(new java.awt.Font("Roboto Condensed", 0, 20)); // NOI18N
@@ -358,34 +367,38 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5)))
-                .addContainerGap(10, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel5))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel4)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                        .addGap(0, 52, Short.MAX_VALUE)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                         .addComponent(jLabel5)
                         .addGap(46, 46, 46))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addContainerGap())))
         );
 
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel10.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        tabelaNomes.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
+        tabelaNomes.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
+        tabelaNomes.setForeground(new java.awt.Color(102, 102, 102));
         tabelaNomes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -411,7 +424,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             tabelaNomes.getColumnModel().getColumn(2).setResizable(false);
         }
 
-        rmvAluno.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
+        rmvAluno.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         rmvAluno.setForeground(new java.awt.Color(102, 102, 102));
         rmvAluno.setText("Remover Aluno");
         rmvAluno.setEnabled(false);
@@ -421,7 +434,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        addAluno.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
+        addAluno.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         addAluno.setForeground(new java.awt.Color(102, 102, 102));
         addAluno.setText("Adicionar Aluno");
         addAluno.addActionListener(new java.awt.event.ActionListener() {
@@ -430,10 +443,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(102, 102, 102));
         jLabel7.setText("RA:");
 
-        nomeAluno.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
+        nomeAluno.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
+        nomeAluno.setForeground(new java.awt.Color(102, 102, 102));
         nomeAluno.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 nomeAlunoFocusLost(evt);
@@ -445,13 +460,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(102, 102, 102));
         jLabel8.setText("Nome:");
 
-        jLabel9.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(102, 102, 102));
         jLabel9.setText("E-mail:");
 
-        emailAluno.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
+        emailAluno.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
+        emailAluno.setForeground(new java.awt.Color(102, 102, 102));
         emailAluno.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 emailAlunoFocusLost(evt);
@@ -463,16 +481,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        raAluno.setForeground(new java.awt.Color(102, 102, 102));
         try {
             raAluno.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#########")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
         raAluno.setToolTipText("");
-        raAluno.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
+        raAluno.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         raAluno.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 raAlunoFocusLost(evt);
+            }
+        });
+        raAluno.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                raAlunoMouseClicked(evt);
             }
         });
         raAluno.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -487,22 +511,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 754, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel7))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(nomeAluno)
-                                    .addComponent(raAluno)))
-                            .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(emailAluno)))
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel9))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(emailAluno)
+                            .addComponent(raAluno)
+                            .addComponent(nomeAluno))
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel10Layout.createSequentialGroup()
                                 .addGap(28, 28, 28)
@@ -516,7 +536,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGap(11, 11, 11)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
@@ -532,21 +552,33 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addComponent(addAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rmvAluno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(26, 26, 26)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(rmvAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
+        btnVoltar.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
+        btnVoltar.setForeground(new java.awt.Color(102, 102, 102));
+        btnVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/setaVoltarIcone.png"))); // NOI18N
+        btnVoltar.setText("  Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
+
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel9.setPreferredSize(new java.awt.Dimension(1222, 90));
 
-        jLabel6.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/lousaIcone.png"))); // NOI18N
         jLabel6.setText("Precisa de Lousa? ");
 
         botaoLousaSim.setBackground(new java.awt.Color(189, 189, 189));
-        botaoLousaSim.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
+        botaoLousaSim.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         botaoLousaSim.setForeground(new java.awt.Color(102, 102, 102));
         botaoLousaSim.setText("Sim");
         botaoLousaSim.addActionListener(new java.awt.event.ActionListener() {
@@ -556,7 +588,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
 
         botaoLousaNao.setBackground(new java.awt.Color(189, 189, 189));
-        botaoLousaNao.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
+        botaoLousaNao.setFont(new java.awt.Font("Roboto Condensed", 0, 24)); // NOI18N
         botaoLousaNao.setForeground(new java.awt.Color(102, 102, 102));
         botaoLousaNao.setText("Não");
         botaoLousaNao.addActionListener(new java.awt.event.ActionListener() {
@@ -565,48 +597,31 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jLabel10.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel10.setText("Obs: Para mais de 4 alunos, apenas salas com lousa");
-
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(botaoLousaSim, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botaoLousaNao, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botaoLousaSim, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addComponent(botaoLousaNao, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 26, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botaoLousaNao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(botaoLousaSim, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE))
-                .addGap(29, 29, 29))
+                .addGap(10, 10, 10)
+                .addComponent(jLabel6)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(botaoLousaNao, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+                    .addComponent(botaoLousaSim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
-
-        btnVoltar.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
-        btnVoltar.setForeground(new java.awt.Color(102, 102, 102));
-        btnVoltar.setText("Voltar");
-        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVoltarActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -618,7 +633,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1032, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1020, Short.MAX_VALUE)
                         .addGap(28, 28, 28)
                         .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -626,7 +641,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                             .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(14, 14, 14))
         );
@@ -641,15 +656,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
-                        .addGap(11, 11, 11)
-                        .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE))
                     .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17))
+                .addContainerGap())
         );
 
         pack();
@@ -886,6 +901,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_raAlunoFocusLost
 
+    private void raAlunoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_raAlunoMouseClicked
+        if (evt.getClickCount()==1){
+            raAluno.setText("");
+        }else if (evt.getClickCount() ==2){
+            raAluno.setText("");
+        }
+    }//GEN-LAST:event_raAlunoMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addAluno;
     private javax.swing.JToggleButton botaoDataAmanha;
@@ -898,7 +921,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

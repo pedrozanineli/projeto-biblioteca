@@ -95,7 +95,7 @@
               <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="478" max="32767" attributes="0"/>
+              <EmptySpace pref="471" max="32767" attributes="0"/>
               <Component id="btnVoltar" min="-2" pref="50" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
           </Group>
@@ -147,12 +147,15 @@
     <Component class="javax.swing.JButton" name="btnVoltar">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Roboto Condensed" size="18" style="0"/>
+          <Font name="Roboto Condensed" size="24" style="0"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="66" green="66" red="66" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Voltar"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Images/setaVoltarIcone.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="  Voltar"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVoltarActionPerformed"/>
@@ -192,7 +195,7 @@
         <Component class="javax.swing.JLabel" name="labelTexto">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Roboto Condensed" size="18" style="0"/>
+              <Font name="Roboto Condensed" size="24" style="0"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="66" green="66" red="66" type="rgb"/>

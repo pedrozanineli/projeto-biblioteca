@@ -39,7 +39,7 @@ public class CellRenderer extends JLabel implements ListCellRenderer {
         }
   
  
-        setText((String)displayItem);
+        setText(displayItem.toString());
         return this;
     }
 }
