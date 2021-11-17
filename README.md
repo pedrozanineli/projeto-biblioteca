@@ -32,4 +32,8 @@
 
 <details><summary><b>Bibliografia</b></summary>
   
+  Dufrio Refrigeração. Quanto gasta um ar-condicionado de 9000 BTUS? Blog Dufrio. 15 de out. de 2020. Acesso em 22 de set. de 2021. Disponível em: <https://www.dufrio.com.br/blog/ar-condicionado/quanto-gasta-um-ar-condicionado-de-9000-btus/>.
+  
+  Preço da energia elétrica CPFL 2021. NG Solar. 11 de mai. de 2021. Acesso em 23 de set. de 2021. Disponível em: <https://www.ngsolar.com.br/amp/preco-kwh-cpfl>.
+
 </details>
