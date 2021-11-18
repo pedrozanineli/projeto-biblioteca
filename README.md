@@ -14,11 +14,11 @@
 
 <details><summary><b>Problemática</b></summary>
   
-  A
+  Na biblioteca da faculdade Facamp, existem algumas salas preparadas para que alunos possam estudar, abrigando entre 4 e 6 estudantes, além de poder prover uma lousa para anotações durante o estudo.
   
-  A
+  É importante notar, entretanto, que, em muitos momentos (em especial durante o período de provas), o uso não é democrático, com alunos que utilizam a sala por muito tempo e a equipe da biblioteca não detém controle, criando um sério problema de organização.
   
-  A
+  Justifica-se então o desenvolvimento de um software destinado para a reserva das salas, provendo maior controle por meio da divisão em uma tela destinada aos alunos e outra destinada aos funcionários, registrando em um banco de dados as informações dos alunos e suas respectivas reservas.
   
 </details>
 
