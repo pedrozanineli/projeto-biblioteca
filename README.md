@@ -30,8 +30,17 @@
   
   O software foi desenvolvido com a proposta de trazer uma resolução à problemática apresentada de forma eficiente e agradável ao usuário, oferecendo diversos recursos que assistem e suavizam a utilização de suas funcionalidades. Desta forma, vários requisitos foram implementados para cumprir com a proposta e trazer usabilidade ao programa.
   
-  Primeiramente, há uma validação de login que impede usuários comuns de acessarem recursos destinados ao caso de uso do administrador do sistema, e também restrições para que usuários acidentalmente cometam erros na utilização do software, dentre elas:
-  - a
+  Primeiramente, há uma validação de login que impede usuários comuns de acessarem recursos destinados ao caso de uso do administrador do sistema, e também funcionalidades para que as funções do software sejam executadas de forma ágil e com a minimização de erros, dentre elas:
+  
+  - Condições para que os campos aceitem informações corretas e reais (Exemplo: O campo de RA só permite números no seu preenchimento)
+  - Formatadores automáticos para moldes específicos de informações (Exemplo: O campo de nome automaticamente coloca as primeiras letras dos nomes em maiúsculo)
+  - Exceções para que reservas não sejam feitas com a lacuna ou ambiguidade de informações.
+  - Busca no banco de dados para a verificação de horários e salas disponíveis, impossibilitando a reserva dupla nas mesmas condições.
+  - Gatilhos para que os campos se preencham com base no RA do aluno cadastrado ao apertar a tecla Enter na caixa de texto
+  - Barreiras para o monopolio de reservas de um grupo de pessoas com a verificação do RA dos alunos e impossibilidade de reservar por um dia após ter usado esse recurso.
+ 
+  Para o Administrador do sistema, várias das funcionalidades que preveem agilidade e minimização de erros também se aplicam. É possível buscar informações no banco de dados de acordo com uma informação específica escolhida (por nome, data, horário, etc) e também obter detalhes de todos os alunos que estão inclusos nas reservas. O perfil de Administrador é o único capaz de cancelar reservas previamente realizadas pelo software, essa função vem acompanhada de uma certificação de certeza ao tentar utilizá-la a fim de impedir usos acidentais e indevidos da função.
+  
   
   
 </details>
