@@ -28,6 +28,12 @@
 
 <details><summary><b>Funcionalidades e verificações (trocar esse titulo por recursos?)</b></summary>
   
+  O software foi desenvolvido com a proposta de trazer uma resolução à problemática apresentada de forma eficiente e agradável ao usuário, oferecendo diversos recursos que assistem e suavizam a utilização de suas funcionalidades. Desta forma, vários requisitos foram implementados para cumprir com a proposta e trazer usabilidade ao programa.
+  
+  Primeiramente, há uma validação de login que impede usuários comuns de acessarem recursos destinados ao caso de uso do administrador do sistema, e também restrições para que usuários acidentalmente cometam erros na utilização do software, dentre elas:
+  - a
+  
+  
 </details>
 
 <details><summary><b>Bibliografia</b></summary>
