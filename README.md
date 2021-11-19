@@ -24,6 +24,16 @@
 
 <details><summary><b>Consequências do projeto</b></summary>
   
+  Além de ter como objetivo principal uma melhor organização do espaço, o software também será capaz de trazer benefícios em esferas econômicas, sociais e ambientais. Isso se dá pelo fato de que hoje, mesmo que não estejam sendo utilizadas, todas as salas permanecem com o ar condicionado e luz ligado, por cerca de 9 horas ao dia.
+  
+  Em estimativa feita pelo time do uso das salas - levando em consideração o maior fluxo em épocas de provas -, é possível fazer estimativas quanto à disparidade que é possível alcançar com o gasto apenas quando a sala estiver de fato sendo utilizada.
+  
+  Primeiramente, quanto a um impacto social, devemos levar em consideração que uma sala que não foi utilizada e está, portanto, limpa, não tem a necessidade do retrabalho de ser limpa novamente, o que permite com que a equipe da faxina possa realizar tudo com uma maior calma, diminuindo sua carga de tarefas, que não é nada pequena.
+  
+  Quanto aos efeitos ambientais, é possível pensar, com a estimativa proposta, em uma economia ao final de um ano de cerca de 13.305,6 kW, em torno dos 40%. Essa energia poderia ser então destinada para outros fins, como para o abastecimento de casas, e que seria suficiente para cerca de 68 casas anualmente.
+  
+  De forma similar, uma economia financeira também aconteceria por volta dos 40%, resultando em cerca de R$ 11.309,76 de economia anual. 
+  
 </details>
 
 <details><summary><b>Funcionalidades e recursos</b></summary>
@@ -32,11 +42,11 @@
   
   Primeiramente, há uma validação de login que impede usuários comuns de acessarem recursos destinados ao caso de uso do administrador do sistema, e também funcionalidades para que as funções do software sejam executadas de forma ágil e com a minimização de erros, dentre elas:
   
-  - Condições para que os campos aceitem informações corretas e reais (Exemplo: O campo de RA só permite números no seu preenchimento)
-  - Formatadores automáticos para moldes específicos de informações (Exemplo: O campo de nome automaticamente coloca as primeiras letras dos nomes em maiúsculo)
-  - Exceções para que reservas não sejam feitas com a lacuna ou ambiguidade de informações.
-  - Busca no banco de dados para a verificação de horários e salas disponíveis, impossibilitando a reserva dupla nas mesmas condições.
-  - Gatilhos para que os campos se preencham com base no RA do aluno cadastrado ao apertar a tecla Enter na caixa de texto
+  - Condições para que os campos aceitem informações corretas e reais (como o campo de RA só permite números no seu preenchimento);
+  - Formatadores automáticos para moldes específicos de informações (p.e o campo de nome automaticamente coloca as primeiras letras dos nomes em maiúsculo);
+  - Exceções para que reservas não sejam feitas com a lacuna ou ambiguidade de informações;
+  - Busca no banco de dados para a verificação de horários e salas disponíveis, impossibilitando a reserva dupla nas mesmas condições;
+  - Gatilhos para que os campos se preencham com base no RA do aluno cadastrado ao apertar a tecla Enter na caixa de texto;
   - Barreiras para o monopolio de reservas de um grupo de pessoas com a verificação do RA dos alunos e impossibilidade de reservar por um dia após ter usado esse recurso.
  
   Para o Administrador do sistema, várias das funcionalidades que preveem agilidade e minimização de erros também se aplicam. É possível buscar informações no banco de dados de acordo com uma informação específica escolhida (por nome, data, horário, etc) e também obter detalhes de todos os alunos que estão inclusos nas reservas. O perfil de Administrador é o único capaz de cancelar reservas previamente realizadas pelo software, essa função vem acompanhada de uma certificação de certeza ao tentar utilizá-la a fim de impedir usos acidentais e indevidos da função.
