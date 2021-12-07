@@ -51,9 +51,9 @@
  
   Para o Administrador do sistema, várias das funcionalidades que preveem agilidade e minimização de erros também se aplicam. É possível buscar informações no banco de dados de acordo com uma informação específica escolhida (por nome, data, horário, etc) e também obter detalhes de todos os alunos que estão inclusos nas reservas. O perfil de Administrador é o único capaz de cancelar reservas previamente realizadas pelo software, essa função vem acompanhada de uma certificação de certeza ao tentar utilizá-la a fim de impedir usos acidentais e indevidos da função.
   
-  
-  
 </details>
+
+<b>Capturas de tela</b>
 
 <details><summary><b>Bibliografia</b></summary>
   
