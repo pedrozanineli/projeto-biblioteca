@@ -53,7 +53,11 @@
   
 </details>
 
-<b>Capturas de tela</b>
+<details><summary><b>Capturas de tela</b></summary>
+  
+  
+
+</details>
 
 <details><summary><b>Bibliografia</b></summary>
   
