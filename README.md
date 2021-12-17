@@ -54,8 +54,12 @@
 </details>
 
 <details><summary><b>Capturas de tela</b></summary>
+    
+  <div align='center'>
   
+  ![tela-login](https://github.com/pedrozanineli/projeto-biblioteca/blob/main/tela-login.png)
   
+  </div>
 
 </details>
 
