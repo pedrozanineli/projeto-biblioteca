@@ -5,6 +5,7 @@
 <div align='center'>
 
 <a href='https://github.com/pedrozanineli/projeto-biblioteca/releases'>
+  
 
 <img src='https://img.shields.io/github/v/release/pedrozanineli/projeto-biblioteca?color=blue&label=versao&style=for-the-badge'>
 
