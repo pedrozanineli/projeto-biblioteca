@@ -6,7 +6,6 @@
 
 <a href='https://github.com/pedrozanineli/projeto-biblioteca/releases'>
   
-
 <img src='https://img.shields.io/github/v/release/pedrozanineli/projeto-biblioteca?color=blue&label=versao&style=for-the-badge'>
 
 </a>
@@ -61,6 +60,7 @@
   ![tela-login](https://github.com/pedrozanineli/projeto-biblioteca/blob/main/tela-login.png)
   
   ![tela-alunos](https://github.com/pedrozanineli/projeto-biblioteca/blob/main/tela-alunos.png)
+  
   
     
   </div>
