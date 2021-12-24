@@ -61,7 +61,7 @@
   
   ![tela-alunos](https://github.com/pedrozanineli/projeto-biblioteca/blob/main/tela-alunos.png)
   
-  
+  ![tela-admin](https://github.com/pedrozanineli/projeto-biblioteca/blob/main/tela-admin.png)
   
   </div>
 
