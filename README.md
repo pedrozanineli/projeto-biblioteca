@@ -1,6 +1,6 @@
 <h1 align="center">Software de Agendamento de Salas</h1>
 
-<p align="center">Desenvolvimento de uma aplicação de agendamento de salas como parte do Projeto de Integração de Engenharia do quarto semestre de Engenharia de Computação.</p>
+<p align="center">Desenvolvimento de uma aplicação de agendamento de salas como parte do Projeto de Integração de Engenharia do quarto semestre de Engenharia de Computação para a biblioteca da faculdade.</p>
 
 <div align='center'>
 
